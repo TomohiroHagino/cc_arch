@@ -74,3 +74,69 @@ spec/
     └── helpers/              # カスタムヘルパー
         └── api_helper.rb
 ```
+
+
+
+Djangoだとこんな感じだろうか
+```
+project/
+├── apps/
+│   └── your_app/
+│       ├── domain/
+│       │   ├── entities.py
+│       │   ├── repositories.py
+│       │   └── services/
+│       │       ├── user_service.py         # ユーザー関連のドメインサービス
+│       │       ├── product_service.py      # 商品関連のドメインサービス
+│       │       ├── order_service.py        # 注文関連のドメインサービス
+│       │       └── __init__.py
+│       ├── infrastructure/
+│       │   ├── models.py
+│       │   ├── serializers.py
+│       │   ├── views.py
+│       │   └── admin.py
+│       ├── application/
+│       │   ├── use_cases/
+│       │   │   ├── create_something.py
+│       │   │   ├── update_something.py
+│       │   │   └── ...
+│       │   ├── services/
+│       │   │   ├── notification_service.py  # 通知に関するアプリケーションサービス
+│       │   │   ├── report_service.py        # レポート生成サービス
+│       │   │   ├── logging_service.py       # ロギングサービス
+│       │   │   └── __init__.py
+│       │   └── __init__.py
+│       ├── presentation/
+│       │   ├── controllers/
+│       │   │   ├── user_controller.py
+│       │   │   ├── product_controller.py
+│       │   │   ├── order_controller.py
+│       │   │   └── __init__.py
+│       │   ├── templates/
+│       │   │   ├── users/
+│       │   │   │   ├── list.html
+│       │   │   │   ├── detail.html
+│       │   │   │   └── form.html
+│       │   │   ├── products/
+│       │   │   │   ├── list.html
+│       │   │   │   ├── detail.html
+│       │   │   │   └── form.html
+│       │   │   └── base.html
+│       │   ├── views/
+│       │   │   ├── user_views.py
+│       │   │   ├── product_views.py
+│       │   │   ├── order_views.py
+│       │   │   └── __init__.py
+│       │   └── __init__.py
+│       └── tests/
+│           ├── domain/
+│           ├── infrastructure/
+│           ├── application/
+│           └── presentation/
+├── project/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+└── manage.py
+```
