@@ -15,25 +15,11 @@ app/
 │             └── active_record_user_queries.rb 　# 読み取り系
 │
 ├── use_cases/                   # ユースケース層
-│   ├── users/
-│   │   ├── create_user.rb           # ユースケース: ユーザー作成
-│   │   ├── update_user.rb           # ユースケース: ユーザー更新
-│   │   ├── delete_user.rb           # ユースケース: ユーザー削除
-│   │   └── get_user.rb              # ユースケース: ユーザー取得
-│   └── services/                    # サービス層 (汎用的な処理)
-│　　     ├── api/
-│　　     │    ├── payment_service.rb       # （モバイルの）支払いサービス
-│　　     │    └── ....
-│　　     ├── wapi/
-│　　     │    ├── payment_service.rb       # （Webの）支払いサービス
-│　　     │    └── ....
-│　　     ├── admin/
-│　　     │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
-│　　     │    └── ....
-│　　     └── share
-│            　├── email_service.rb         # メール送信サービス
-│            　├── payment_service.rb       # 支払いサービス
-│            　└── notification_service.rb  # 通知サービス
+│   └── users/
+│       ├── create_user.rb           # ユースケース: ユーザー作成
+│       ├── update_user.rb           # ユースケース: ユーザー更新
+│       ├── delete_user.rb           # ユースケース: ユーザー削除
+│       └── get_user.rb              # ユースケース: ユーザー取得
 │
 ├── infrastructure/              # フレームワーク & ドライバ層
 │   ├── repositories/            # リポジトリ実装
@@ -41,6 +27,20 @@ app/
 │   │    │    └── active_record_user_commands.rb  # 書き込み系
 │   │    └── queries/
 │   │         └── active_record_user_queries.rb 　# 読み取り系
+│   ├── services/                    # サービス層 (汎用的な処理)
+│   │    ├── api/
+│   │    │    ├── payment_service.rb       # （モバイルの）支払いサービス
+│   │    │    └── ....
+│   │    ├── wapi/
+│   │    │    ├── payment_service.rb       # （Webの）支払いサービス
+│   │    │    └── ....
+│   │    ├── admin/
+│   │    │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
+│   │    │    └── ....
+│   │    └── share
+│   │        　├── email_service.rb         # メール送信サービス
+│   │        　├── payment_service.rb       # 支払いサービス
+│   │        　└── notification_service.rb  # 通知サービス
 │   └── external_apis/           # 外部APIとの連携
 │       └── payment_gateway_api.rb
 │
@@ -85,6 +85,20 @@ spec/
 │   │    │    └── active_record_user_commands_spec.rb  # 書き込み系
 │   │    └── queries/
 │   │         └── active_record_user_queries_spec.rb 　# 読み取り系
+│   ├── services/                    # サービス層 (汎用的な処理)
+│   │    ├── api/
+│   │    │    ├── payment_service.rb       # （モバイルの）支払いサービス
+│   │    │    └── ....
+│   │    ├── wapi/
+│   │    │    ├── payment_service.rb       # （Webの）支払いサービス
+│   │    │    └── ....
+│   │    ├── admin/
+│   │    │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
+│   │    │    └── ....
+│   │    └── share
+│   │        　├── email_service.rb         # メール送信サービス
+│   │        　├── payment_service.rb       # 支払いサービス
+│   │        　└── notification_service.rb  # 通知サービス
 │   └── external_apis/        # 外部API連携のテスト
 │       └── payment_gateway_api_spec.rb
 │
