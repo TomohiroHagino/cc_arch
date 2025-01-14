@@ -14,9 +14,16 @@ app/
 │   │   ├── delete_user.rb           # ユースケース: ユーザー削除
 │   │   └── get_user.rb              # ユースケース: ユーザー取得
 │   └── services/                    # サービス層 (汎用的な処理)
-│       ├── email_service.rb         # メール送信サービス
-│       ├── payment_service.rb       # 支払いサービス
-│       └── notification_service.rb  # 通知サービス
+│　　     ├── api/
+│　　     │    └── ...
+│　　     ├── wapi/
+│　　     │    └── ...
+│　　     ├── admin/
+│  　     │    └── email_service.rb         # （管理者が使用するための）メール送信サービス
+│　　     └── share
+│              ├── email_service.rb         # メール送信サービス
+│            　├── payment_service.rb       # 支払いサービス
+│       　     └── notification_service.rb  # 通知サービス
 ├── infrastructure/              # フレームワーク & ドライバ層
 │   ├── repositories/            # リポジトリ実装
 │   │   └── active_record_user_repository.rb
