@@ -69,8 +69,12 @@ spec/
 │   │   │   └── users_controller_request_spec.rb
 │   │   ├── admin/
 │   │   │   └── users_controller_request_spec.rb
-│   │   └── wapi/
-│   │       └── users_controller_request_spec.rb
+│   │   ├── wapi/
+│   │   │   └── users_controller_request_spec.rb
+│   │   └── share
+│   │       ├── email_service_spec.rb         # メール送信サービス
+│   │       ├── payment_service_spec.rb       # 支払いサービス
+│   │       └── notification_service_spec.rb  # 通知サービス
 │   └── serializers/          # シリアライザのテスト
 │       └── user_serializer_spec.rb
 └── support/                  # テストのヘルパーモジュールや共通設定
