@@ -7,6 +7,7 @@ app/
 │   │   └── user.rb
 │   └── repositories/            # リポジトリ
 │       └── user_repository.rb
+│
 ├── use_cases/                   # ユースケース層
 │   ├── users/
 │   │   ├── create_user.rb           # ユースケース: ユーザー作成
@@ -24,11 +25,13 @@ app/
 │            　├── email_service.rb         # メール送信サービス
 │            　├── payment_service.rb       # 支払いサービス
 │            　└── notification_service.rb  # 通知サービス
+│
 ├── infrastructure/              # フレームワーク & ドライバ層
 │   ├── repositories/            # リポジトリ実装
 │   │   └── active_record_user_repository.rb
 │   └── external_apis/           # 外部APIとの連携
 │       └── payment_gateway_api.rb
+│
 └── interfaces/                 # インターフェースアダプタ層
     ├── controllers/            # インターフェース (コントローラ)
     │     ├── api/
@@ -45,6 +48,7 @@ app/
     │          └── index.html.erb
     ├── presenters/                  # プレゼンター
     │    └── user_presenter.rb       # ユーザー表示フォーマット
+    │
     └── serializers/
 ```
 
