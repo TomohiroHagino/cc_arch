@@ -5,7 +5,7 @@ app/
 ├── domain/                      # ドメイン層（フレームワークや外部システムに依存しない純粋なRubyコードで記述）
 │   ├── entities/                # エンティティ
 │   │   └── user.rb
-│   ├── services/                          # ドメインサービス層
+│   ├── services/                          # ドメインサービス層（エンティティや値オブジェクトだけでは表現しづらいビジネスロジックを定義する）
 │   │   ├── shipping_cost_service.rb       # ドメインサービス: 配送費計算
 │   │   └── calculate_tax_service.rb       # ドメインサービス: 税計算
 │   └── repositories/            # リポジトリ
