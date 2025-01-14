@@ -14,7 +14,7 @@ app/
 │        └── queries/
 │             └── active_record_user_queries.rb 　# 読み取り系
 │
-├── use_cases/                   # ユースケース層
+├── use_cases/ # ユースケース層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
 │   └── users/
 │       ├── create_user.rb           # ユースケース: ユーザー作成
 │       ├── update_user.rb           # ユースケース: ユーザー更新
