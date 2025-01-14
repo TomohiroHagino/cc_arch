@@ -176,9 +176,21 @@ project/
 │       │
 │       ├── application/
 │       │   ├── use_cases/
-│       │   │   ├── create_something.py
-│       │   │   ├── update_something.py
-│       │   │   └── ...
+│       │   │   ├── users/
+│       │   │   │   ├── create_user.py
+│       │   │   │   ├── update_user.py
+│       │   │   │   ├── ....
+│       │   │   │   └── __init__.py
+│       │   │   ├── products/
+│       │   │   │   ├── create_product.py
+│       │   │   │   ├── update_product.py
+│       │   │   │   ├── ....
+│       │   │   │   └── __init__.py
+│       │   │   └── orders/
+│       │   │       ├── create_order.py
+│       │   │       ├── update_order.py
+│       │   │       ├── ....
+│       │   │       └── __init__.py
 │       │   └── __init__.py
 │       │
 │       ├── presentation/
@@ -188,6 +200,10 @@ project/
 │       │   │   ├── order_controller.py
 │       │   │   └── __init__.py
 │       │   ├── templates/
+│       │   │   ├── partials/
+│       │   │   │   ├── header.html
+│       │   │   │   ├── footer.html
+│       │   │   │   └── ...
 │       │   │   ├── users/
 │       │   │   │   ├── list.html
 │       │   │   │   ├── detail.html
