@@ -47,7 +47,7 @@ app/
 │   │    ├── admin/
 │   │    │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
 │   │    │    └── ....
-│   │    └── share
+│   │    └── common
 │   │        　├── email_service.rb         # メール送信サービス
 │   │        　├── payment_service.rb       # 支払いサービス
 │   │        　└── notification_service.rb  # 通知サービス
