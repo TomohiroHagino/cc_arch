@@ -201,20 +201,20 @@ src/
 ├── app/                     # App Routerディレクトリ (ページとレイアウト)
 │   ├── layout.tsx           # 全体のレイアウト
 │   ├── page.tsx             # トップページ
-│   ├── users/               # ユーザー関連のルート
-│   │   ├── page.tsx         # ユーザー一覧ページ
-│   │   └── [id]/            # ユーザー詳細ページ
-│   │       └── page.tsx     # 個別ユーザー詳細
+│   └── users/               # ユーザー関連のルート
+│       ├── page.tsx         # ユーザー一覧ページ
+│       └── [id]/            # ユーザー詳細ページ
+│           └── page.tsx     # 個別ユーザー詳細
 ├── components/              # UIコンポーネント
 │   ├── common/              # 再利用可能な汎用コンポーネント
 │   │   └── Button.tsx       # 汎用ボタン
-│   ├── users/               # ユーザー関連コンポーネント
-│   │   ├── UserCard.tsx     # ユーザー情報カード
-│   │   ├── UserList.tsx     # ユーザー一覧表示
-│   │   └── UserDetail.tsx   # ユーザー詳細表示
+│   └── users/               # ユーザー関連コンポーネント
+│       ├── UserCard.tsx     # ユーザー情報カード
+│       ├── UserList.tsx     # ユーザー一覧表示
+│       └── UserDetail.tsx   # ユーザー詳細表示
 ├── infrastructure/          # API通信やデータアクセス関連
-│   ├── api/                 # Rails APIクライアント
-│   │   └── UserApi.ts       # ユーザーAPIクライアント
+│   └── api/                 # Rails APIクライアント
+│       └── UserApi.ts       # ユーザーAPIクライアント
 ├── styles/                  # スタイル関連
 │   ├── globals.css          # グローバルCSS
 │   └── variables.css        # カスタムプロパティ（変数）
