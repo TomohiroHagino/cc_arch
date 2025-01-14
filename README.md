@@ -41,3 +41,37 @@ app/
     │          └── index.html.erb
     └── serializers/
 ```
+
+```
+spec/
+├── domain/                   # ドメイン層に関するテスト
+│   ├── entities/             # ドメインエンティティのテスト
+│   │   └── user_spec.rb
+│   └── repositories/         # リポジトリインターフェースのテスト
+│       └── user_repository_spec.rb
+├── use_cases/                # ユースケース層のテスト
+│   └── users/
+│       └── create_user_spec.rb
+├── infrastructure/           # インフラストラクチャ層のテスト
+│   ├── repositories/         # リポジトリ実装のテスト (ActiveRecordなど)
+│   │   └── active_record_user_repository_spec.rb
+│   └── external_apis/        # 外部API連携のテスト
+│       └── payment_gateway_api_spec.rb
+├── interfaces/               # インターフェース層のテスト
+│   ├── requests/          # コントローラのリクエストスペック
+│   │   ├── api/
+│   │   │   └── users_controller_request_spec.rb
+│   │   ├── admin/
+│   │   │   └── users_controller_request_spec.rb
+│   │   └── wapi/
+│   │       └── users_controller_request_spec.rb
+│   └── serializers/          # シリアライザのテスト
+│       └── user_serializer_spec.rb
+└── support/                  # テストのヘルパーモジュールや共通設定
+    ├── factories/            # FactoryBotのファクトリ
+    │   └── users.rb
+    ├── shared_examples/      # 共通のテストケース
+    │   └── user_repository_examples.rb
+    └── helpers/              # カスタムヘルパー
+        └── api_helper.rb
+```
