@@ -5,6 +5,9 @@ app/
 ├── domain/                      # ドメイン層
 │   ├── entities/                # エンティティ
 │   │   └── user.rb
+│   └── services/                          # ドメインサービス層
+│   │   ├── shipping_cost_service.rb       # ドメインサービス: 配送費計算
+│   │   └── calculate_tax_service.rb       # ドメインサービス: 税計算
 │   └── repositories/            # リポジトリ
 │       └── user_repository.rb
 │
