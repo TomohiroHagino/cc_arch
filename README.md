@@ -36,7 +36,7 @@ app/
     ├── views/                  # インターフェース(ビュー)
     │    └── users/
     │          └── index.html.erb
-    ├── presenters/                  # プレゼンター層
+    ├── presenters/                  # プレゼンター
     │    └── user_presenter.rb       # ユーザー表示フォーマット
     └── serializers/
 ```
