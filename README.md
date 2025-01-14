@@ -120,12 +120,24 @@ project/
 │       │   ├── entities.py
 │       │   ├── repositories.py
 │       │   └── services/
-│       │       ├── user_service.py         # ユーザー関連のドメインサービス
-│       │       ├── product_service.py      # 商品関連のドメインサービス
-│       │       ├── order_service.py        # 注文関連のドメインサービス
+│       │       ├── user_service.py
+│       │       ├── product_service.py
+│       │       ├── order_service.py
 │       │       └── __init__.py
 │       ├── infrastructure/
-│       │   ├── models.py
+│       │   ├── repositories/
+│       │   │   ├── queries/
+│       │   │   │   ├── user_query_repository.py   # ユーザーデータ取得用
+│       │   │   │   ├── product_query_repository.py # 商品データ取得用
+│       │   │   │   ├── order_query_repository.py   # 注文データ取得用
+│       │   │   │   └── __init__.py
+│       │   │   ├── commands/
+│       │   │   │   ├── user_command_repository.py # ユーザーデータ操作用
+│       │   │   │   ├── product_command_repository.py # 商品データ操作用
+│       │   │   │   ├── order_command_repository.py # 注文データ操作用
+│       │   │   │   └── __init__.py
+│       │   │   └── __init__.py
+│       │   ├── ~models.py~
 │       │   ├── serializers.py
 │       │   ├── views.py
 │       │   └── admin.py
@@ -135,13 +147,13 @@ project/
 │       │   │   ├── update_something.py
 │       │   │   └── ...
 │       │   ├── services/
-│       │   │   ├── notification_service.py  # 通知に関するアプリケーションサービス
-│       │   │   ├── report_service.py        # レポート生成サービス
-│       │   │   ├── logging_service.py       # ロギングサービス
+│       │   │   ├── notification_service.py
+│       │   │   ├── report_service.py
+│       │   │   ├── logging_service.py
 │       │   │   └── __init__.py
 │       │   └── __init__.py
 │       ├── presentation/
-│       │   ├── controllers/                 # api
+│       │   ├── controllers/
 │       │   │   ├── user_controller.py
 │       │   │   ├── product_controller.py
 │       │   │   ├── order_controller.py
