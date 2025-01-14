@@ -3,9 +3,9 @@
 ```
 app/
 ├── domain/                      # ドメイン層
-│   ├── entities/                # ドメインエンティティ
+│   ├── entities/                # エンティティ
 │   │   └── user.rb
-│   └── repositories/            # リポジトリインターフェース
+│   └── repositories/            # リポジトリ
 │       └── user_repository.rb
 ├── use_cases/                   # ユースケース層
 │   ├── users/
