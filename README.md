@@ -137,7 +137,7 @@ project/
 │       │   │   │   ├── order_command_repository.py # 注文データ操作用
 │       │   │   │   └── __init__.py
 │       │   │   └── __init__.py
-│       │   ├── ~models.py~
+│       │   ├── ~models.py~　(消す)
 │       │   ├── serializers.py
 │       │   ├── views.py
 │       │   └── admin.py
