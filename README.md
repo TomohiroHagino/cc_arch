@@ -14,7 +14,7 @@ app/
 │   ├── services/  # ドメインサービス層（エンティティや値オブジェクトだけでは表現しづらいビジネスロジックを定義する）
 │   │   ├── shipping_cost_service.rb       # ドメインサービス: 配送費計算
 │   │   └── calculate_tax_service.rb       # ドメインサービス: 税計算
-│   └── repositories/   # リポジトリ
+│   └── repositories/   # リポジトリ（アダプター）
 │        ├── commands/
 │        │    └── active_record_user_commands.rb  # 書き込み系
 │        └── queries/
