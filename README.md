@@ -165,6 +165,10 @@ project/
 │       │   │   │   ├── order_command_repository.py # 注文データ操作用
 │       │   │   │   └── __init__.py
 │       │   │   └── __init__.py
+│       │   ├── services/
+│       │   │   ├── user_service.py
+│       │   │   ├── ....
+│       │   │   └── __init__.py
 │       │   ├── ~models.py~　(消す)
 │       │   ├── serializers.py
 │       │   ├── views.py
@@ -175,11 +179,6 @@ project/
 │       │   │   ├── create_something.py
 │       │   │   ├── update_something.py
 │       │   │   └── ...
-│       │   ├── services/
-│       │   │   ├── notification_service.py
-│       │   │   ├── report_service.py
-│       │   │   ├── logging_service.py
-│       │   │   └── __init__.py
 │       │   └── __init__.py
 │       │
 │       ├── presentation/
