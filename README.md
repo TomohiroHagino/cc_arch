@@ -19,11 +19,11 @@ app/
 │　　     ├── wapi/
 │　　     │    └── ...
 │　　     ├── admin/
-│  　     │    └── email_service.rb         # （管理者が使用するための）メール送信サービス
+│　　     │    └── email_service.rb         # （管理者が使用するための）メール送信サービス
 │　　     └── share
-│              ├── email_service.rb         # メール送信サービス
+│            　├── email_service.rb         # メール送信サービス
 │            　├── payment_service.rb       # 支払いサービス
-│       　     └── notification_service.rb  # 通知サービス
+│            　└── notification_service.rb  # 通知サービス
 ├── infrastructure/              # フレームワーク & ドライバ層
 │   ├── repositories/            # リポジトリ実装
 │   │   └── active_record_user_repository.rb
