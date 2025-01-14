@@ -2,7 +2,7 @@
 #### こんな感じになったらとてもスッキリする
 ```
 app/
-├── domain/                      # ドメイン層
+├── domain/                      # ドメイン層（フレームワークや外部システムに依存しない純粋なRubyコードで記述）
 │   ├── entities/                # エンティティ
 │   │   └── user.rb
 │   └── services/                          # ドメインサービス層
@@ -31,7 +31,10 @@ app/
 │
 ├── infrastructure/              # フレームワーク & ドライバ層
 │   ├── repositories/            # リポジトリ実装
-│   │   └── active_record_user_repository.rb
+│   │    ├── commands/
+│   │    │    └── active_record_user_commands.rb
+│   │    └── queries/
+│   │         └── active_record_user_queries.rb
 │   └── external_apis/           # 外部APIとの連携
 │       └── payment_gateway_api.rb
 │
