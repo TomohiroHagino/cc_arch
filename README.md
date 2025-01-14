@@ -138,7 +138,14 @@ project/
 │   └── your_app/
 │       ├── domain/
 │       │   ├── entities.py
-│       │   ├── repositories.py
+│       │   ├── repositories/
+│       │   │   ├── queries/
+│       │   │   │   ├── ...
+│       │   │   │   └── __init__.py
+│       │   │   ├── commands/
+│       │   │   │   ├── ...
+│       │   │   │   └── __init__.py
+│       │   │   └── __init__.py
 │       │   └── services/
 │       │       ├── user_service.py
 │       │       ├── product_service.py
