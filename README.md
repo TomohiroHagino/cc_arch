@@ -75,9 +75,12 @@ spec/
 │        └── queries/
 │             └── active_record_user_queries_spec.rb
 │
-├── use_cases/                # ユースケース層のテスト
+├── use_cases/                   # ユースケース層のテスト
 │   └── users/
-│       └── create_user_spec.rb
+│       ├── create_user_spec.rb           # ユースケース: ユーザー作成
+│       ├── update_user_spec.rb           # ユースケース: ユーザー更新
+│       ├── delete_user_spec.rb           # ユースケース: ユーザー削除
+│       └── get_user_spec.rb              # ユースケース: ユーザー取得
 │
 ├── infrastructure/           # インフラストラクチャ層のテスト
 │   ├── repositories/         # リポジトリ実装のテスト (ActiveRecordなど)
