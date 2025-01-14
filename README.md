@@ -17,8 +17,6 @@ app/
 │       ├── email_service.rb         # メール送信サービス
 │       ├── payment_service.rb       # 支払いサービス
 │       └── notification_service.rb  # 通知サービス
-├── presenters/                  # プレゼンター層
-│   └── user_presenter.rb        # ユーザー表示フォーマット
 ├── infrastructure/              # フレームワーク & ドライバ層
 │   ├── repositories/            # リポジトリ実装
 │   │   └── active_record_user_repository.rb
@@ -38,6 +36,8 @@ app/
     ├── views/                  # インターフェース(ビュー)
     │    └── users/
     │          └── index.html.erb
+    ├── presenters/                  # プレゼンター層
+    │    └── user_presenter.rb       # ユーザー表示フォーマット
     └── serializers/
 ```
 
