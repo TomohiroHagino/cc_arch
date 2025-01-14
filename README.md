@@ -22,11 +22,14 @@ app/
 │   │   └── get_user.rb              # ユースケース: ユーザー取得
 │   └── services/                    # サービス層 (汎用的な処理)
 │　　     ├── api/
-│　　     │    └── ...
+│　　     │    ├── payment_service.rb       # （モバイルの）支払いサービス
+│　　     │    └── ....
 │　　     ├── wapi/
-│　　     │    └── ...
+│　　     │    ├── payment_service.rb       # （Webの）支払いサービス
+│　　     │    └── ....
 │　　     ├── admin/
-│　　     │    └── email_service.rb         # （管理者が使用するための）メール送信サービス
+│　　     │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
+│　　     │    └── ....
 │　　     └── share
 │            　├── email_service.rb         # メール送信サービス
 │            　├── payment_service.rb       # 支払いサービス
