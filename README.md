@@ -127,6 +127,7 @@ project/
 │       │       ├── product_service.py
 │       │       ├── order_service.py
 │       │       └── __init__.py
+│       │
 │       ├── infrastructure/
 │       │   ├── repositories/
 │       │   │   ├── queries/
@@ -144,6 +145,7 @@ project/
 │       │   ├── serializers.py
 │       │   ├── views.py
 │       │   └── admin.py
+│       │
 │       ├── application/
 │       │   ├── use_cases/
 │       │   │   ├── create_something.py
@@ -155,6 +157,7 @@ project/
 │       │   │   ├── logging_service.py
 │       │   │   └── __init__.py
 │       │   └── __init__.py
+│       │
 │       ├── presentation/
 │       │   ├── controllers/
 │       │   │   ├── user_controller.py
@@ -177,11 +180,13 @@ project/
 │       │   │   ├── order_views.py
 │       │   │   └── __init__.py
 │       │   └── __init__.py
+│       │
 │       └── tests/
 │           ├── domain/
 │           ├── infrastructure/
 │           ├── application/
 │           └── presentation/
+│
 ├── project/
 │   ├── settings.py
 │   ├── urls.py
