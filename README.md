@@ -107,7 +107,7 @@ project/
 │       │   │   └── __init__.py
 │       │   └── __init__.py
 │       ├── presentation/
-│       │   ├── controllers/
+│       │   ├── controllers/                 # api
 │       │   │   ├── user_controller.py
 │       │   │   ├── product_controller.py
 │       │   │   ├── order_controller.py
