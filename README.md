@@ -5,11 +5,14 @@ app/
 ├── domain/                      # ドメイン層（フレームワークや外部システムに依存しない純粋なRubyコードで記述）
 │   ├── entities/                # エンティティ
 │   │   └── user.rb
-│   └── services/                          # ドメインサービス層
+│   ├── services/                          # ドメインサービス層
 │   │   ├── shipping_cost_service.rb       # ドメインサービス: 配送費計算
 │   │   └── calculate_tax_service.rb       # ドメインサービス: 税計算
 │   └── repositories/            # リポジトリ
-│       └── user_repository.rb
+│        ├── commands/
+│        │    └── active_record_user_commands.rb  # 書き込み系
+│        └── queries/
+│             └── active_record_user_queries.rb 　# 読み取り系
 │
 ├── use_cases/                   # ユースケース層
 │   ├── users/
@@ -32,9 +35,9 @@ app/
 ├── infrastructure/              # フレームワーク & ドライバ層
 │   ├── repositories/            # リポジトリ実装
 │   │    ├── commands/
-│   │    │    └── active_record_user_commands.rb
+│   │    │    └── active_record_user_commands.rb  # 書き込み系
 │   │    └── queries/
-│   │         └── active_record_user_queries.rb
+│   │         └── active_record_user_queries.rb 　# 読み取り系
 │   └── external_apis/           # 外部APIとの連携
 │       └── payment_gateway_api.rb
 │
@@ -64,7 +67,10 @@ spec/
 │   ├── entities/             # ドメインエンティティのテスト
 │   │   └── user_spec.rb
 │   └── repositories/         # リポジトリインターフェースのテスト
-│       └── user_repository_spec.rb
+│        ├── commands/
+│        │    └── active_record_user_commands_spec.rb
+│        └── queries/
+│             └── active_record_user_queries_spec.rb
 │
 ├── use_cases/                # ユースケース層のテスト
 │   └── users/
@@ -72,7 +78,10 @@ spec/
 │
 ├── infrastructure/           # インフラストラクチャ層のテスト
 │   ├── repositories/         # リポジトリ実装のテスト (ActiveRecordなど)
-│   │   └── active_record_user_repository_spec.rb
+│   │    ├── commands/
+│   │    │    └── active_record_user_commands_spec.rb  # 書き込み系
+│   │    └── queries/
+│   │         └── active_record_user_queries_spec.rb 　# 読み取り系
 │   └── external_apis/        # 外部API連携のテスト
 │       └── payment_gateway_api_spec.rb
 │
