@@ -2,13 +2,19 @@
 #### こんな感じに構成を組めたら、とてもスッキリすると思ってます
 ```
 app/
-├── domain/                      # ドメイン層（フレームワークや外部システムに依存しない純粋なRubyコードで記述）
-│   ├── entities/                # エンティティ
-│   │   └── user.rb
-│   ├── services/                          # ドメインサービス層（エンティティや値オブジェクトだけでは表現しづらいビジネスロジックを定義する）
+├── domain/  # ドメイン層（アプリケーションの核となるビジネスロジックやルールを扱う層)
+│   ├── entities/  # エンティティ
+│   │   ├── user.rb
+│   │   ├── order.rb
+│   │   └── product.rb
+│   ├── value_objects/ # 値オブジェクト
+│   │   ├── money.rb
+│   │   ├── address.rb
+│   │   └── email.rb
+│   ├── services/  # ドメインサービス層（エンティティや値オブジェクトだけでは表現しづらいビジネスロジックを定義する）
 │   │   ├── shipping_cost_service.rb       # ドメインサービス: 配送費計算
 │   │   └── calculate_tax_service.rb       # ドメインサービス: 税計算
-│   └── repositories/            # リポジトリ
+│   └── repositories/   # リポジトリ
 │        ├── commands/
 │        │    └── active_record_user_commands.rb  # 書き込み系
 │        └── queries/
@@ -16,10 +22,14 @@ app/
 │
 ├── use_cases/ # ユースケース層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
 │   └── users/
-│       ├── create_user.rb           # ユースケース: ユーザー作成
-│       ├── update_user.rb           # ユースケース: ユーザー更新
-│       ├── delete_user.rb           # ユースケース: ユーザー削除
-│       └── get_user.rb              # ユースケース: ユーザー取得
+│       ├── web/
+│       │    ├── register_user_web.rb          # ユースケース: ユーザー登録
+│       │    ├── ban_user_web.rb               # ユースケース: ユーザー更新（垢BAN
+│       │    └── withdraw_user_web.rb          # ユースケース: ユーザー退会
+│       └── mobile/
+│            ├── register_user_mobile.rb       # ユースケース: ユーザー登録
+│            ├── ban_user_mobile.rb            # ユースケース: ユーザー更新（垢BAN
+│            └── withdraw_user_mobile.rb       # ユースケース: ユーザー退会
 │
 ├── infrastructure/              # フレームワーク & ドライバ層
 │   ├── repositories/            # リポジトリ実装
@@ -29,10 +39,10 @@ app/
 │   │         └── active_record_user_queries.rb 　# 読み取り系
 │   ├── services/                    # サービス層 (汎用的な処理)
 │   │    ├── api/
-│   │    │    ├── payment_service.rb       # （モバイルの）支払いサービス
+│   │    │    ├── payment_service.rb       # （API用）支払いサービス
 │   │    │    └── ....
 │   │    ├── wapi/
-│   │    │    ├── payment_service.rb       # （Webの）支払いサービス
+│   │    │    ├── payment_service.rb       # （Web用）支払いサービス
 │   │    │    └── ....
 │   │    ├── admin/
 │   │    │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
