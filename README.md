@@ -772,3 +772,70 @@ MyComposeApp/
 ├── gradlew.bat                           # Windows用Gradleラッパー
 └── local.properties                      # SDKのパス情報
 ```
+
+### Swift
+
+```
+MySwiftApp/
+├── Domain/
+│   ├── Entities/
+│   │   └── User.swift
+│   └── Repositories/
+│       └── UserRepository.swift
+├── Application/
+│   ├── UseCases/
+│   │   └── GetUserUseCase.swift
+│   └── Services/
+│       └── UserService.swift
+├── Infrastructure/
+│   ├── Config/                     # 設定ファイル関連
+│   │   ├── ApiConfig.swift         # API設定
+│   │   ├── AppConstants.swift      # アプリ全体で使う定数
+│   │   ├── AppInfo.swift           # アプリのバージョンやビルド情報
+│   │   ├── Secrets.xcconfig        # シークレット情報（git管理外）
+│   │   └── Environment.swift       # ビルド環境（Debug/Release）ごとの設定
+│   ├── Logging/                    # ロギング関連
+│   │   └── Logger.swift
+│   ├── Localization/               # ローカリゼーション関連
+│   │   ├── Strings.swift           # Swiftから参照するローカライズキー
+│   │   ├── en.lproj/
+│   │   │   └── Localizable.strings # 英語用のローカライズ
+│   │   └── ja.lproj/
+│   │       └── Localizable.strings # 日本語用のローカライズ
+│   ├── Data/                       # データ関連
+│   │   ├── Repositories/
+│   │   │   └── UserRepositoryImpl.swift
+│   │   ├── Network/
+│   │   │   └── ApiClient.swift
+│   │   └── Models/
+│   │       └── UserDto.swift
+│   └── DI/                         # 依存性注入関連
+│       └── DependencyInjector.swift
+├── Presentation/
+│   ├── ViewModels/
+│   │   └── UserViewModel.swift
+│   ├── Views/
+│   │   ├── UserView.swift
+│   │   └── Components/
+│   │       └── UserCardView.swift
+│   └── Styles/                     # デザインシステム関連
+│       ├── AppColors.swift         # カラーテーマ
+│       └── AppTypography.swift     # テキストスタイル
+├── Tests/                          # テスト関連
+│   ├── DomainTests/
+│   │   └── GetUserUseCaseTests.swift
+│   ├── ApplicationTests/
+│   │   └── UserServiceTests.swift
+│   ├── InfrastructureTests/
+│   │   ├── UserRepositoryImplTests.swift
+│   │   └── ApiClientTests.swift
+│   └── PresentationTests/
+│       └── UserViewModelTests.swift
+└── Configurations/                 # ビルド設定
+    ├── Debug.xcconfig
+    ├── Release.xcconfig
+    └── Staging.xcconfig
+
+```
+
+
