@@ -2,6 +2,11 @@
 https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
 こちらの記事で勉強させていただきました
 
+![スクリーンショット 2025-01-15 12 52 40](https://github.com/user-attachments/assets/4182b645-3bc7-49f3-94a7-06efbddb2890)
+
+![スクリーンショット 2025-01-15 12 53 20](https://github.com/user-attachments/assets/9b4c3007-c38d-40ab-b516-bae1db5030de)
+
+
 ```
 app/
 ├── domain/ # ドメイン層
