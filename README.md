@@ -457,7 +457,7 @@ src/
 ### React (基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かもしれない)
 ```
 src/
-├── domain/                            # ドメイン層
+├── 01_domain/                            # ドメイン層
 │   ├── entities/                      # エンティティ
 │   │   ├── Product.ts                 # 商品エンティティ
 │   │   └── User.ts                    # ユーザーエンティティ
@@ -468,7 +468,7 @@ src/
 │       ├── ProductTypes.ts            # 商品関連型
 │       └── UserTypes.ts               # ユーザー関連型
 │
-├── application/                       # アプリケーション層（ユースケース・状態管理）
+├── 02_application/                       # アプリケーション層（ユースケース・状態管理）
 │   ├── hooks/                         # カスタムフック
 │   │   ├── useFetchUsers.ts           # ユーザー一覧取得
 │   │   ├── useFetchProducts.ts        # 商品一覧取得
@@ -485,7 +485,7 @@ src/
 │       ├── AuthTypes.ts               # 認証関連型
 │       └── StateTypes.ts              # 状態管理型
 │
-├── infrastructure/                    # インフラストラクチャ層（外部リソースとの通信）
+├── 03_infrastructure/                 # インフラストラクチャ層（外部リソースとの通信）
 │   ├── api/                           # API通信
 │   │   ├── clients/                   # HTTPクライアント
 │   │   │   └── httpClient.ts          # Axios設定
@@ -502,7 +502,7 @@ src/
 │   └── external/                      # 外部サービス連携
 │       └── firebaseClient.ts          # Firebaseクライアント設定
 │
-├── interface/                         # インターフェース層（UIとプレゼンテーション）
+├── 04_interface/                         # インターフェース層（UIとプレゼンテーション）
 │   ├── components/                    # 再利用可能なUIコンポーネント
 │   │   ├── common/                    # 汎用コンポーネント
 │   │   │   ├── Button.tsx             # ボタン
