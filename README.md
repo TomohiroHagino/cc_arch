@@ -51,16 +51,15 @@ app/
 │   │           │   └── user_command_repository.rb
 │   │           └── queries/
 │   │               └── user_query_repository.rb
-│   ├── shared/                 # ドメイン全体で共有される値オブジェクトやサービス
-│   │   ├── value_objects/
-│   │   │   ├── money.rb        # 共有の金額値オブジェクト
-│   │   │   ├── address.rb      # 共有の住所値オブジェクト
-│   │   │   └── email.rb        # 共有のメール値オブジェクト
-│   │   └── services/
-│   │       └── tax_calculator_service.rb  # 税金計算
-│   └── services/              # ドメイン全体で使用するサービス
-│       ├── shipping_cost_service.rb       # 配送料計算
-│       └── calculate_tax_service.rb       # 税金計算
+│   └── shared/                 # ドメイン全体で共有される値オブジェクトやサービス
+│       ├── value_objects/
+│       │   ├── money.rb        # 共有の金額値オブジェクト
+│       │   ├── address.rb      # 共有の住所値オブジェクト
+│       │   └── email.rb        # 共有のメール値オブジェクト
+│       └── services/
+│           └── tax_calculator_service.rb  # 税金計算
+│           ├── shipping_cost_service.rb       # 配送料計算
+│           └── calculate_tax_service.rb       # 税金計算
 │
 ├── use_cases/ # ユースケース層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
 │   └── users/
