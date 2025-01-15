@@ -64,7 +64,7 @@ app/
 │           ├── shipping_cost_service.rb       # 配送料計算
 │           └── calculate_tax_service.rb       # 税金計算
 │
-├── use_cases/ # ユースケース層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
+├── use_cases/ # アプリケーション層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
 │   └── users/
 │       ├── web/
 │       │    ├── register_user_web.rb          # ユースケース: ユーザー登録
