@@ -245,7 +245,7 @@ spec/
 
 ### Railsプロジェクトのフォルダも加えるとこんな感じに
 ```
-project_root/
+app/
 ├── 01_domain/               # ドメイン層
 │   ├── aggregates/
 │   ├── services/
@@ -264,22 +264,17 @@ project_root/
 │
 ├── 04_infrastructure/       # インフラストラクチャ層
 │   ├── repositories/
-│   ├── ~models/~            # (ここにモデルを配置しない方がわかりやすいかも)
+│   ├── mailers/
+│   ├── models/
+│   ├── jobs/
 │   └── external_apis/
 │
 ├── 05_interfaces/           # インターフェース層
 │   ├── controllers/
 │   ├── views/
 │   ├── presenters/
+│   ├── javascripts/
 │   └── serializers/
-│
-├── app/                     # Rails標準のディレクトリ
-│   ├── controllers/         # Rails用コントローラー（MVC用）
-│   ├── helpers/
-│   ├── jobs/
-│   ├── mailers/
-│   ├── models/              # ActiveRecordモデル
-│   └── views/               # Rails用ビュー
 │
 ├── bin/                     # Rails実行ファイル
 │   ├── rails
@@ -305,11 +300,7 @@ project_root/
 │
 ├── storage/                 # ActiveStorage用
 │
-├── test/                    # テストコード
-│   ├── fixtures/
-│   ├── integration/
-│   ├── system/
-│   └── unit/
+├── spec/                    # テストコード
 │
 ├── tmp/                     # 一時ファイル
 │
@@ -318,7 +309,7 @@ project_root/
 ├── Gemfile                  # Gemの管理
 ├── Gemfile.lock             # Gemのバージョン固定
 ├── Rakefile                 # Rakeタスク管理
-└── README.md                # プロジェクト説明
+└── README.md                # プロジェクト説明、環境構築などの手順を書く
 ```
 
 
