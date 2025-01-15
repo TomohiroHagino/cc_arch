@@ -291,6 +291,8 @@ app/
 │   ├── schema.rb
 │   └── seeds.rb
 │
+├── node_modules/
+│
 ├── lib/                     # ライブラリ（カスタムコードを配置する場所）
 │   └── tasks/
 │
