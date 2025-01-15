@@ -135,7 +135,7 @@ app/
 
 ```
 spec/
-├── 01_domain/                  # ドメイン層
+├── 01_domain/               # ドメイン層
 │   ├── aggregates/          # アグリゲート
 │   │   ├── shopping_cart/   # ショッピングカートアグリゲートのテスト
 │   │   │   ├── shopping_cart_spec.rb  # ショッピングカートアグリゲートのテスト
