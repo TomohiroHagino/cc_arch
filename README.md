@@ -9,6 +9,7 @@ https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
 
 ```
 app/
+│
 ├── domain/ # ドメイン層
 │   ├── aggregates/             # アグリゲートを管理するフォルダ
 │   │   ├── shopping_cart/      # ショッピングカートアグリゲート
@@ -26,6 +27,7 @@ app/
 │   │   │       │   └── shopping_cart_command_repository.rb
 │   │   │       └── queries/
 │   │   │           └── shopping_cart_query_repository.rb
+│   │   │
 │   │   ├── order/              # 注文アグリゲート
 │   │   │   ├── order.rb                # アグリゲートルート
 │   │   │   ├── entities/               # エンティティを格納
@@ -43,6 +45,7 @@ app/
 │   │   │       │   └── order_command_repository.rb
 │   │   │       └── queries/
 │   │   │           └── order_query_repository.rb
+│   │   │
 │   │   └── user/               # ユーザーアグリゲート
 │   │       ├── user.rb                 # アグリゲートルート
 │   │       ├── entities/               # エンティティを格納
@@ -59,6 +62,7 @@ app/
 │   │           │   └── user_command_repository.rb
 │   │           └── queries/
 │   │               └── user_query_repository.rb
+│   │
 │   └── shared/                 # ドメイン全体で共有される値オブジェクトやサービス
 │       ├── value_objects/
 │       │   ├── money.rb        # 共有の金額値オブジェクト
@@ -127,122 +131,114 @@ app/
 
 ```
 spec/
-├── factories/
-│   ├── users.rb          # Userモデルのファクトリー
-│   ├── orders.rb         # Orderモデルのファクトリー
-│   ├── shopping_carts.rb # ShoppingCartモデルのファクトリー
-│   └── shared/
-│       ├── addresses.rb  # 共有値オブジェクト（住所など）のファクトリー
-│       └── ...
-├── domain/
-│   ├── aggregates/
-│   │   ├── shopping_cart/
-│   │   │   ├── shopping_cart_spec.rb
-│   │   │   ├── entities/
-│   │   │   │   ├── shopping_cart_item_spec.rb
-│   │   │   │   └── discount_spec.rb
-│   │   │   ├── value_objects/
-│   │   │   │   ├── product_id_spec.rb
-│   │   │   │   └── money_spec.rb
-│   │   │   ├── services/
-│   │   │   │   └── calculate_cart_total_service_spec.rb
-│   │   │   └── repositories/
+├── domain/                  # ドメイン層
+│   ├── aggregates/          # アグリゲート
+│   │   ├── shopping_cart/   # ショッピングカートアグリゲートのテスト
+│   │   │   ├── shopping_cart_spec.rb  # ショッピングカートアグリゲートのテスト
+│   │   │   ├── entities/           # エンティティのテスト
+│   │   │   │   ├── shopping_cart_item_spec.rb  # ショッピングカートアイテムエンティティのテスト
+│   │   │   │   └── discount_spec.rb            # 割引情報エンティティのテスト
+│   │   │   ├── value_objects/          # 値オブジェクトのテスト
+│   │   │   │   ├── product_id_spec.rb          # 商品ID（値オブジェクト）のテスト
+│   │   │   │   └── money_spec.rb               # 金額（値オブジェクト）のテスト
+│   │   │   ├── services/               # ドメインサービスのテスト
+│   │   │   │   └── calculate_cart_total_service_spec.rb  # カート合計金額計算サービスのテスト
+│   │   │   └── repositories/           # リポジトリのテスト
 │   │   │       ├── commands/
 │   │   │       │   └── shopping_cart_command_repository_spec.rb
 │   │   │       └── queries/
 │   │   │           └── shopping_cart_query_repository_spec.rb
-│   │   ├── order/
-│   │   │   ├── order_spec.rb
-│   │   │   ├── entities/
-│   │   │   │   ├── order_item_spec.rb
-│   │   │   │   ├── shipping_detail_spec.rb
-│   │   │   │   └── payment_detail_spec.rb
-│   │   │   ├── value_objects/
-│   │   │   │   ├── money_spec.rb
-│   │   │   │   ├── address_spec.rb
-│   │   │   │   └── tax_rate_spec.rb
-│   │   │   ├── services/
-│   │   │   │   └── calculate_order_total_service_spec.rb
-│   │   │   └── repositories/
+│   │   ├── order/              # 注文アグリゲート
+│   │   │   ├── order_spec.rb                # 注文アグリゲートのテスト
+│   │   │   ├── entities/               # エンティティのテスト
+│   │   │   │   ├── order_item_spec.rb          # 注文アイテムエンティティのテスト
+│   │   │   │   ├── shipping_detail_spec.rb     # 配送情報エンティティのテスト
+│   │   │   │   └── payment_detail_spec.rb      # 支払い情報エンティティのテスト
+│   │   │   ├── value_objects/          # 値オブジェクトのテスト
+│   │   │   │   ├── money_spec.rb               # 金額（値オブジェクト）のテスト
+│   │   │   │   ├── address_spec.rb             # 住所（値オブジェクト）のテスト
+│   │   │   │   └── tax_rate_spec.rb            # 税率（値オブジェクト）のテスト
+│   │   │   ├── services/               # ドメインサービスのテスト
+│   │   │   │   └── calculate_order_total_service_spec.rb # 注文合計金額計算サービスのテスト
+│   │   │   └── repositories/           # リポジトリのテスト
 │   │   │       ├── commands/
 │   │   │       │   └── order_command_repository_spec.rb
 │   │   │       └── queries/
 │   │   │           └── order_query_repository_spec.rb
-│   │   └── user/
-│   │       ├── user_spec.rb
-│   │       ├── entities/
-│   │       │   ├── user_profile_spec.rb
-│   │       │   └── user_preferences_spec.rb
-│   │       ├── value_objects/
-│   │       │   ├── email_spec.rb
-│   │       │   ├── password_spec.rb
-│   │       │   └── address_spec.rb
-│   │       ├── services/
-│   │       │   └── password_encryption_service_spec.rb
-│   │       └── repositories/
+│   │   └── user/               # ユーザーアグリゲート
+│   │       ├── user_spec.rb                 # ユーザーアグリゲートのテスト
+│   │       ├── entities/               # エンティティのテスト
+│   │       │   ├── user_profile_spec.rb        # ユーザープロファイルエンティティのテスト
+│   │       │   └── user_preferences_spec.rb    # ユーザー設定エンティティのテスト
+│   │       ├── value_objects/          # 値オブジェクトのテスト
+│   │       │   ├── email_spec.rb              # メール（値オブジェクト）のテスト
+│   │       │   ├── password_spec.rb           # パスワード（値オブジェクト）のテスト
+│   │       │   └── address_spec.rb            # 住所（値オブジェクト）のテスト
+│   │       ├── services/               # ドメインサービスのテスト
+│   │       │   └── password_encryption_service_spec.rb  # パスワード暗号化サービスのテスト
+│   │       └── repositories/           # リポジトリのテスト
 │   │           ├── commands/
 │   │           │   └── user_command_repository_spec.rb
 │   │           └── queries/
 │   │               └── user_query_repository_spec.rb
-│   ├── shared/
-│   │   ├── value_objects/
-│   │   │   ├── money_spec.rb
-│   │   │   ├── address_spec.rb
-│   │   │   └── email_spec.rb
-│   │   └── services/
-│   │       └── tax_calculator_service_spec.rb
-│   └── services/
-│       ├── shipping_cost_service_spec.rb
-│       └── calculate_tax_service_spec.rb
+│   └── shared/                 # ドメイン全体で共有される値オブジェクトやサービス
+│       ├── value_objects/
+│       │   ├── money_spec.rb        # 共有の金額値オブジェクトのテスト
+│       │   ├── address_spec.rb      # 共有の住所値オブジェクトのテスト
+│       │   └── email_spec.rb        # 共有のメール値オブジェクトのテスト
+│       └── services/
+│           └── tax_calculator_service_spec.rb  # 税金計算サービスのテスト
+│           ├── shipping_cost_service_spec.rb       # 配送料計算サービスのテスト
+│           └── calculate_tax_service_spec.rb       # 税金計算サービスのテスト
 │
-├── use_cases/
+├── use_cases/ # ユースケース層
 │   └── users/
 │       ├── web/
-│       │   ├── register_user_web_spec.rb
-│       │   ├── ban_user_web_spec.rb
-│       │   └── withdraw_user_web_spec.rb
+│       │    ├── register_user_web_spec.rb          # ユースケース: ユーザー登録のテスト
+│       │    ├── ban_user_web_spec.rb               # ユースケース: ユーザー更新（垢BAN）のテスト
+│       │    └── withdraw_user_web_spec.rb          # ユースケース: ユーザー退会のテスト
 │       └── mobile/
-│           ├── register_user_mobile_spec.rb
-│           ├── ban_user_mobile_spec.rb
-│           └── withdraw_user_mobile_spec.rb
+│            ├── register_user_mobile_spec.rb       # ユースケース: ユーザー登録のテスト
+│            ├── ban_user_mobile_spec.rb            # ユースケース: ユーザー更新（垢BAN）のテスト
+│            └── withdraw_user_mobile_spec.rb       # ユースケース: ユーザー退会のテスト
 │
-├── infrastructure/
-│   ├── repositories/
-│   │   ├── commands/
-│   │   │   └── active_record_user_commands_spec.rb
-│   │   └── queries/
-│   │       └── active_record_user_queries_spec.rb
-│   ├── services/
-│   │   ├── api/
-│   │   │   └── payment_service_spec.rb
-│   │   ├── wapi/
-│   │   │   └── payment_service_spec.rb
-│   │   ├── admin/
-│   │   │   └── email_service_spec.rb
-│   │   └── common/
-│   │       ├── email_service_spec.rb
-│   │       ├── payment_service_spec.rb
-│   │       └── notification_service_spec.rb
-│   └── external_apis/
+├── infrastructure/              # フレームワーク & ドライバ層
+│   ├── repositories/            # リポジトリ実装のテスト
+│   │    ├── commands/
+│   │    │    └── active_record_user_command_repository_spec.rb  # 書き込み系リポジトリのテスト
+│   │    └── queries/
+│   │         └── active_record_user_query_repository_spec.rb 　# 読み取り系リポジトリのテスト
+│   ├── services/  # サービス層のテスト (汎用的な処理)
+│   │    ├── api/
+│   │    │    ├── email_service_spec.rb       # （API用）メール送信サービスのテスト
+│   │    ├── wapi/
+│   │    │    ├── email_service_spec.rb       # （Web用）メール送信サービスのテスト
+│   │    ├── admin/
+│   │    │    ├── email_service_spec.rb         # （管理者用）メール送信サービスのテスト
+│   │    └── common
+│   │        　├── email_service_spec.rb         # メール送信サービスのテスト
+│   │        　└── notification_service_spec.rb  # 通知サービスのテスト
+│   └── external_apis/           # 外部APIとの連携のテスト
 │       └── payment_gateway_api_spec.rb
 │
-└── interfaces/
-    ├── controllers/
-    │   ├── api/
-    │   │   └── v1/
-    │   │       └── users_controller_spec.rb
-    │   ├── wapi/
-    │   │   └── v1/
-    │   │       └── users_controller_spec.rb
-    │   └── admin/
-    │       └── users_controller_spec.rb
-    ├── views/
-    │   └── users/
-    │       └── index_spec.rb
-    ├── presenters/
-    │   └── user_presenter_spec.rb
-    └── serializers/
-        └── user_serializer_spec.rb
+└── interfaces/                 # インターフェースアダプタ層
+    ├── controllers/            # コントローラのテスト
+    │     ├── api/
+    │     │    └── v1/
+    │     │        └── users_controller_spec.rb
+    │     ├── wapi/
+    │     │    └── v1/
+    │     │        └── users_controller_spec.rb
+    │     └── admin/
+    │          └── users_controller_spec.rb
+    │
+    ├── views/                  # ビューのテスト
+    │    └── users/
+    │          └── index_spec.rb
+    ├── presenters/                  # プレゼンターのテスト
+    │    └── user_presenter_spec.rb       # ユーザー表示フォーマットのテスト
+    │
+    └── serializers/  # API レスポンスフォーマットのテスト
 
 ```
 
