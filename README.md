@@ -613,7 +613,7 @@ src/
 ```
 
 
-### Vue.js (Vue 3)'
+### Vue.js (Vue 3)
 
 ```
 src/
