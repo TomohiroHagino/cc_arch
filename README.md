@@ -243,6 +243,85 @@ spec/
 
 ```
 
+### Railsプロジェクトのフォルダも加えるとこんな感じに
+```
+project_root/
+├── 01_domain/               # ドメイン層
+│   ├── aggregates/
+│   ├── services/
+│   └── value_objects/
+│
+├── 02_services/             # アプリケーションサービス層
+│   ├── api/
+│   ├── wapi/
+│   ├── admin/
+│   └── common/
+│
+├── 03_use_cases/            # アプリケーション層
+│   ├── users/
+│   ├── orders/
+│   └── payments/
+│
+├── 04_infrastructure/       # インフラストラクチャ層
+│   ├── repositories/
+│   ├── models/
+│   └── external_apis/
+│
+├── 05_interfaces/           # インターフェース層
+│   ├── controllers/
+│   ├── views/
+│   ├── presenters/
+│   └── serializers/
+│
+├── app/                     # Rails標準のディレクトリ
+│   ├── controllers/         # Rails用コントローラー（MVC用）
+│   ├── helpers/
+│   ├── jobs/
+│   ├── mailers/
+│   ├── models/              # ActiveRecordモデル
+│   └── views/               # Rails用ビュー
+│
+├── bin/                     # Rails実行ファイル
+│   ├── rails
+│   └── rake
+│
+├── config/                  # Rails設定ファイル
+│   ├── application.rb
+│   ├── database.yml
+│   ├── environment.rb
+│   └── routes.rb
+│
+├── db/                      # データベース関連
+│   ├── migrate/
+│   ├── schema.rb
+│   └── seeds.rb
+│
+├── lib/                     # ライブラリ（カスタムコードを配置する場所）
+│   └── tasks/
+│
+├── log/                     # ログファイル
+│
+├── public/                  # 静的ファイル（HTML、CSSなど）
+│
+├── storage/                 # ActiveStorage用
+│
+├── test/                    # テストコード
+│   ├── fixtures/
+│   ├── integration/
+│   ├── system/
+│   └── unit/
+│
+├── tmp/                     # 一時ファイル
+│
+├── vendor/                  # サードパーティコード
+│
+├── Gemfile                  # Gemの管理
+├── Gemfile.lock             # Gemのバージョン固定
+├── Rakefile                 # Rakeタスク管理
+└── README.md                # プロジェクト説明
+```
+
+
 
 
 Djangoだとこんな感じだろうか
