@@ -612,3 +612,92 @@ src/
 
 ```
 
+
+Vue.js (Vue 3)
+```
+src/
+├── 01_domain/                         # ドメイン層
+│   ├── entities/                      # エンティティ
+│   │   ├── User.ts                    # ユーザーエンティティ
+│   │   └── Product.ts                 # 商品エンティティ
+│   ├── valueObjects/                  # 値オブジェクト
+│   │   ├── Price.ts                   # 商品価格値オブジェクト
+│   │   └── Email.ts                   # メール値オブジェクト
+│   └── types/                         # ドメイン固有の型
+│       ├── UserTypes.ts               # ユーザー型
+│       └── ProductTypes.ts            # 商品型
+│
+├── 02_application/                    # アプリケーション層（ユースケースや状態管理）
+│   ├── composables/                   # カスタムコンポーザブル
+│   │   ├── useFetchUsers.ts           # ユーザー取得
+│   │   ├── useFetchProducts.ts        # 商品取得
+│   │   └── useUserAuth.ts             # 認証状態管理
+│   ├── stores/                        # 状態管理（PiniaやVuexなど）
+│   │   ├── authStore.ts               # 認証情報管理
+│   │   ├── userStore.ts               # ユーザー情報管理
+│   │   └── productStore.ts            # 商品情報管理
+│   └── types/                         # アプリケーション層の型
+│       ├── AuthTypes.ts               # 認証関連型
+│       ├── StoreTypes.ts              # 状態管理型
+│       └── ComposableTypes.ts         # カスタムコンポーザブル型
+│
+├── 03_infrastructure/                    # インフラストラクチャ層
+│   ├── api/                           # APIクライアント
+│   │   ├── clients/                   # HTTPクライアント（Axios設定など）
+│   │   │   └── httpClient.ts
+│   │   ├── services/                  # 各リソース用のAPIサービス
+│   │   │   ├── userService.ts         # ユーザー関連APIサービス
+│   │   │   └── productService.ts      # 商品関連APIサービス
+│   │   └── types/                     # APIレスポンス型
+│   │       ├── UserDTO.ts             # ユーザーDTO型
+│   │       ├── ProductDTO.ts          # 商品DTO型
+│   │       └── ApiResponse.ts         # 共通レスポンス型
+│   ├── storage/                       # ストレージ操作
+│   │   ├── localStorage.ts            # ローカルストレージ操作
+│   │   └── sessionStorage.ts          # セッションストレージ操作
+│   └── external/                      # 外部サービス連携
+│       └── firebaseClient.ts          # Firebase設定
+│
+├── 04_interface/                         # インターフェース層
+│   ├── router/                        # Vue Routerの設定
+│   │   ├── index.ts                   # ルート設定
+│   │   └── guards/                    # ルートガード
+│   │       ├── authGuard.ts           # 認証ガード
+│   │       └── roleGuard.ts           # 権限ガード
+│   ├── views/                         # ページコンポーネント
+│   │   ├── HomeView.vue               # ホームページ
+│   │   ├── UsersView.vue              # ユーザーページ
+│   │   └── ProductsView.vue           # 商品ページ
+│   ├── components/                    # 再利用可能なUIコンポーネント
+│   │   ├── common/                    # 汎用コンポーネント
+│   │   │   ├── Button.vue             # ボタン
+│   │   │   └── Modal.vue              # モーダル
+│   │   ├── layout/                    # レイアウト関連
+│   │   │   ├── Header.vue             # ヘッダー
+│   │   │   └── Footer.vue             # フッター
+│   │   ├── users/                     # ユーザー関連コンポーネント
+│   │   │   └── UserCard.vue           # ユーザーカード
+│   │   └── products/                  # 商品関連コンポーネント
+│   │       └── ProductList.vue        # 商品一覧
+│   └── styles/                        # スタイル
+│       ├── index.css                  # グローバルスタイル
+│       └── theme.ts                   # テーマ設定
+│
+├── shared/                            # 再利用可能な型や定数
+│   ├── types/                         # 共通型定義
+│   │   ├── CommonTypes.ts             # 汎用型（例: ID, Nullable）
+│   │   ├── PaginationTypes.ts         # ページング型
+│   │   └── ApiResponseTypes.ts        # APIレスポンス共通型
+│   ├── constants/                     # 定数
+│   │   ├── apiEndpoints.ts            # APIエンドポイント
+│   │   └── appConfig.ts               # アプリ設定
+│   └── helpers/                       # 汎用ヘルパー関数
+│       ├── formatDate.ts              # 日付フォーマット
+│       └── logger.ts                  # ログ出力
+│
+└── utils/                             # 汎用的なユーティリティ関数
+    ├── formatDate.ts                  # 日付フォーマット
+    ├── logger.ts                      # ログ出力
+    └── validators.ts                  # 入力バリデーション
+```
+
