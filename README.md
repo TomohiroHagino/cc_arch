@@ -86,6 +86,7 @@ app/
 │   └── common
 │       　├── email_service.rb         # メール送信サービス
 │       　└── notification_service.rb  # 通知サービス
+│
 ├── 03_use_cases/ # アプリケーション層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
 │   └── users/
 │       ├── web/
@@ -107,7 +108,6 @@ app/
 │   │                           #     バリデーションはドメイン層のエンティティと値オブジェクトで。
 │   └── external_apis/          # 外部APIとの連携
 │       └── payment_gateway_api.rb
-│
 │
 └── 05_interfaces/              # インターフェースアダプタ層
     ├── controllers/            # インターフェース (コントローラ)
