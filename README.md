@@ -264,7 +264,7 @@ project_root/
 │
 ├── 04_infrastructure/       # インフラストラクチャ層
 │   ├── repositories/
-│   ├── models/
+│   ├── ~models/~            # (ここにモデルを配置しない方がわかりやすいかも)
 │   └── external_apis/
 │
 ├── 05_interfaces/           # インターフェース層
