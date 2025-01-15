@@ -30,7 +30,7 @@ app/
 │   │   │   │   └── tax_rate.rb            # 税率（値オブジェクト）
 │   │   │   ├── services/               # ドメインサービス
 │   │   │   │   └── calculate_order_total_service.rb # 注文合計金額計算
-│   │   │   └── repositories/           # リポジトリ
+│   │   │   └── repositories/           # リポジトリ（アグリゲートごとにコマンド、クエリフォルダを作ってもいいかもしれない）
 │   │   │       ├── commands/
 │   │   │       │   └── order_command_repository.rb
 │   │   │       └── queries/
