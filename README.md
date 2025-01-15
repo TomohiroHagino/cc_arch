@@ -120,6 +120,9 @@ app/
     │     └── admin/
     │          └── users_controller.rb
     │
+    ├── assets/
+    ├── javascripts/
+    │
     ├── views/                  # インターフェース(ビュー)
     │    └── users/
     │          └── index.html.erb
@@ -223,15 +226,15 @@ spec/
 │       └── payment_gateway_api_spec.rb
 │
 └── 05_interfaces/                 # インターフェースアダプタ層
-    ├── controllers/            # コントローラのテスト
+    ├── requests/                  # コントローラのテスト
     │     ├── api/
     │     │    └── v1/
-    │     │        └── users_controller_spec.rb
+    │     │        └── users_controller_request_spec.rb
     │     ├── wapi/
     │     │    └── v1/
-    │     │        └── users_controller_spec.rb
+    │     │        └── users_controller_request_spec.rb
     │     └── admin/
-    │          └── users_controller_spec.rb
+    │          └── users_controller_request_spec.rb
     │
     ├── views/                  # ビューのテスト
     │    └── users/
