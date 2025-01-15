@@ -454,46 +454,65 @@ src/
     └── formatDate.ts        # 日付フォーマットなどの関数
 ```
 
-### React (openapi使ってもいいかもしれない)
+### React (基本バックエンドからapiで情報を受け取るのでドメイン層は作らない。 openapi使うともっと楽かもしれない)
 ```
 src/
+├── application/                   # アプリケーション層（ユースケース管理、状態管理）
+│   ├── hooks/                     # カスタムフック（データ取得や状態管理）
+│   │   ├── useFetchUsers.ts       # ユーザー一覧取得
+│   │   ├── useFetchProducts.ts    # 商品一覧取得
+│   │   └── useUserAuth.ts         # 認証状態管理
+│   └── state/                     # グローバル状態管理（必要に応じて）
+│       ├── auth/                  # 認証関連の状態
+│       │   ├── authSlice.ts       # 認証情報のReduxスライス
+│       │   └── authActions.ts     # 認証関連のアクション
+│       ├── products/              # 商品関連の状態
+│       │   ├── productSlice.ts    # 商品情報のReduxスライス
+│       │   └── productActions.ts  # 商品関連のアクション
+│       └── store.ts               # Redux Storeの設定
 │
-├── api/                  # API通信を管理
-│   ├── clients/          # APIクライアント
-│   │   └── httpClient.ts # 共通のHTTPクライアント（axiosなどをラップ）
-│   ├── services/         # 各リソース用のAPIサービス
-│   │   ├── userService.ts      # ユーザー関連API
-│   │   └── productService.ts   # 商品関連API
-│   └── types/            # APIレスポンスの型定義
-│       ├── user.ts       # ユーザー関連型
-│       └── product.ts    # 商品関連型
+├── infrastructure/       # インフラストラクチャー層（外部リソースとの通信）
+│   ├── api/              # API通信ロジック
+│   │   ├── clients/      # HTTPクライアント
+│   │   │   └── httpClient.ts      # Axios設定
+│   │   ├── services/              # 各リソース用のAPI呼び出し
+│   │   │   ├── userService.ts     # ユーザー関連API
+│   │   │   └── productService.ts  # 商品関連API
+│   │   └── types/                 # APIレスポンスの型定義
+│   │       ├── user.ts            # ユーザー型
+│   │       └── product.ts         # 商品型
+│   ├── storage/                   # ストレージ操作（必要に応じて）
+│   │   ├── localStorage.ts        # ローカルストレージ操作
+│   │   └── sessionStorage.ts      # セッションストレージ操作
+│   └── external/                  # 外部サービス連携（必要に応じて）
+│       └── firebaseClient.ts      # Firebaseクライアント設定
 │
-├── components/           # 再利用可能なUIコンポーネント
-│   ├── common/           # 汎用コンポーネント（ボタン、入力フィールドなど）
-│   │   └── Button.tsx
-│   ├── layout/           # レイアウト用コンポーネント
-│   │   └── Header.tsx
-│   ├── users/            # ユーザー関連コンポーネント
-│   │   └── UserCard.tsx
-│   └── products/         # 商品関連コンポーネント
-│       └── ProductList.tsx
+├── interface/            # インターフェース層（UIとプレゼンテーション層）
+│   ├── components/       # 再利用可能なUIコンポーネント
+│   │   ├── common/       # 汎用コンポーネント（ボタン、モーダルなど）
+│   │   │   ├── Button.tsx
+│   │   │   └── Modal.tsx
+│   │   ├── layout/       # レイアウト関連（ヘッダー、フッターなど）
+│   │   │   ├── Header.tsx
+│   │   │   └── Footer.tsx
+│   │   ├── users/        # ユーザー関連コンポーネント
+│   │   │   └── UserCard.tsx
+│   │   └── products/     # 商品関連コンポーネント
+│   │       └── ProductList.tsx
+│   ├── pages/            # ページコンポーネント（React Routerと連携）
+│   │   ├── HomePage.tsx
+│   │   ├── UsersPage.tsx
+│   │   └── ProductsPage.tsx
+│   └── styles/           # スタイル関連
+│       ├── index.css     # グローバルスタイル
+│       └── theme.ts      # テーマ設定
 │
-├── hooks/                # カスタムフック（データ取得や状態管理）
-│   ├── useFetchUsers.ts  # ユーザー一覧取得
-│   └── useFetchProducts.ts # 商品一覧取得
+├── utils/                # ユーティリティ（補助的な関数や共通ロジック）
+│   ├── formatDate.ts     # 日付フォーマット関数
+│   ├── logger.ts         # ログ出力
+│   └── validators.ts     # バリデーションロジック
 │
-├── pages/                # 各ページ（React Routerと連携）
-│   ├── HomePage.tsx      # ホームページ
-│   ├── UsersPage.tsx     # ユーザー一覧ページ
-│   └── ProductsPage.tsx  # 商品一覧ページ
-│
-├── styles/               # グローバルスタイルやCSS
-│   └── index.css         # 共通スタイル
-│
-├── utils/                # ヘルパー関数や共通ロジック
-│   └── formatDate.ts     # 日付フォーマット関数
-│
-├── App.tsx               # ルートコンポーネント
-└── index.tsx             # エントリーポイント
+├── App.tsx               # アプリケーション全体のエントリーポイント
+└── index.tsx             # Reactアプリの起動スクリプト
 ```
 
