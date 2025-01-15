@@ -74,7 +74,18 @@ app/
 │           ├── shipping_cost_service.rb       # 配送料計算
 │           └── calculate_tax_service.rb       # 税金計算
 │
-├── 02_services/  # アプリケーションサービス層 (汎用的な処理)
+├── 02_use_cases/ # アプリケーション層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
+│   └── users/
+│       ├── web/
+│       │    ├── register_user_web.rb          # ユースケース: ユーザー登録
+│       │    ├── ban_user_web.rb               # ユースケース: ユーザー更新（垢BAN
+│       │    └── withdraw_user_web.rb          # ユースケース: ユーザー退会
+│       └── mobile/
+│            ├── register_user_mobile.rb       # ユースケース: ユーザー登録
+│            ├── ban_user_mobile.rb            # ユースケース: ユーザー更新（垢BAN
+│            └── withdraw_user_mobile.rb       # ユースケース: ユーザー退会
+│
+├── 03_services/  # アプリケーションサービス層 (汎用的な処理)
 │   ├── api/
 │   │    ├── email_service.rb       # （API用）メール送信サービス
 │   │    └── ....
@@ -87,17 +98,6 @@ app/
 │   └── common
 │       　├── email_service.rb         # メール送信サービス
 │       　└── notification_service.rb  # 通知サービス
-│
-├── 03_use_cases/ # アプリケーション層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
-│   └── users/
-│       ├── web/
-│       │    ├── register_user_web.rb          # ユースケース: ユーザー登録
-│       │    ├── ban_user_web.rb               # ユースケース: ユーザー更新（垢BAN
-│       │    └── withdraw_user_web.rb          # ユースケース: ユーザー退会
-│       └── mobile/
-│            ├── register_user_mobile.rb       # ユースケース: ユーザー登録
-│            ├── ban_user_mobile.rb            # ユースケース: ユーザー更新（垢BAN
-│            └── withdraw_user_mobile.rb       # ユースケース: ユーザー退会
 │
 ├── 04_infrastructure/           # インフラストラクチャー層
 │   ├── repositories/            # リポジトリ実装
@@ -195,18 +195,7 @@ spec/
 │           ├── shipping_cost_service_spec.rb       # 配送料計算サービスのテスト
 │           └── calculate_tax_service_spec.rb       # 税金計算サービスのテスト
 │
-├── 02_services/  # アプリケーションサービス層 (汎用的な処理)
-│   ├── wapi/
-│   │    ├── email_service.rb       # （Web用）メール送信サービスのテスト
-│   │    └── ....
-│   ├── admin/
-│   │    ├── email_service.rb         # （管理者が使用するための）メール送信サービスのテスト
-│   │    └── ....
-│   └── common
-│       　├── email_service.rb         # メール送信サービスのテスト
-│       　└── notification_service.rb  # 通知サービスのテスト
-│
-├── 03_use_cases/ # アプリケーション層
+├── 02_use_cases/ # アプリケーション層
 │   └── users/
 │       ├── web/
 │       │    ├── register_user_web_spec.rb          # ユースケース: ユーザー登録のテスト
@@ -216,6 +205,17 @@ spec/
 │            ├── register_user_mobile_spec.rb       # ユースケース: ユーザー登録のテスト
 │            ├── ban_user_mobile_spec.rb            # ユースケース: ユーザー更新（垢BAN）のテスト
 │            └── withdraw_user_mobile_spec.rb       # ユースケース: ユーザー退会のテスト
+│
+├── 03_services/  # アプリケーションサービス層 (汎用的な処理)
+│   ├── wapi/
+│   │    ├── email_service.rb       # （Web用）メール送信サービスのテスト
+│   │    └── ....
+│   ├── admin/
+│   │    ├── email_service.rb         # （管理者が使用するための）メール送信サービスのテスト
+│   │    └── ....
+│   └── common
+│       　├── email_service.rb         # メール送信サービスのテスト
+│       　└── notification_service.rb  # 通知サービスのテスト
 │
 ├── 04_infrastructure/           # インフラストラクチャー層
 │   ├── repositories/            # リポジトリ実装のテスト
@@ -255,16 +255,16 @@ app/
 │   ├── services/
 │   └── value_objects/
 │
-├── 02_services/             # アプリケーションサービス層
+├── 02_use_cases/            # アプリケーション層
+│   ├── users/
+│   ├── orders/
+│   └── payments/
+│
+├── 03_services/             # アプリケーションサービス層
 │   ├── api/
 │   ├── wapi/
 │   ├── admin/
 │   └── common/
-│
-├── 03_use_cases/            # アプリケーション層
-│   ├── users/
-│   ├── orders/
-│   └── payments/
 │
 ├── 04_infrastructure/       # インフラストラクチャ層
 │   ├── repositories/
@@ -424,34 +424,121 @@ project/
 └── manage.py
 ```
 
-### Next.js（バックエンドを用意して、フロントエンドではスタイルを整えて基本表示させるだけ）
+### Next.js（基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かもしれない）
 ```
 src/
-├── app/                     # App Routerディレクトリ (ページとレイアウト)
-│   ├── layout.tsx           # 全体のレイアウト
-│   ├── page.tsx             # トップページ
-│   └── users/               # ユーザー関連のルート
-│       ├── page.tsx         # ユーザー一覧ページ
-│       └── [id]/            # ユーザー詳細ページ
-│           └── page.tsx     # 個別ユーザー詳細
-├── components/              # UIコンポーネント
-│   ├── common/              # 再利用可能な汎用コンポーネント
-│   │   └── Button.tsx       # 汎用ボタン
-│   └── users/               # ユーザー関連コンポーネント
-│       ├── UserCard.tsx     # ユーザー情報カード
-│       ├── UserList.tsx     # ユーザー一覧表示
-│       └── UserDetail.tsx   # ユーザー詳細表示
-├── infrastructure/          # API通信やデータアクセス関連
-│   └── api/                 # Rails APIクライアント
-│       └── UserApi.ts       # ユーザーAPIクライアント
-├── styles/                  # スタイル関連
-│   ├── globals.css          # グローバルCSS
-│   └── variables.css        # カスタムプロパティ（変数）
-├── types/                   # 型定義
-│   ├── User.ts              # ユーザー関連の型
-│   └── index.ts             # 他の型のエントリーポイント
-└── utils/                   # ユーティリティ関数
-    └── formatDate.ts        # 日付フォーマットなどの関数
+├── app/                               # App Routerのルートディレクトリ
+│   ├── layout.tsx                     # 共通レイアウト
+│   ├── page.tsx                       # ホームページ
+│   ├── users/                         # ユーザーページ
+│   │   ├── page.tsx                   # ユーザー一覧ページ
+│   │   ├── [id]/                      # 動的ルート: ユーザー詳細ページ
+│   │   │   └── page.tsx
+│   │   └── loading.tsx                # ローディングスケルトン
+│   ├── products/                      # 商品ページ
+│   │   ├── page.tsx                   # 商品一覧ページ
+│   │   ├── [id]/                      # 動的ルート: 商品詳細ページ
+│   │   │   └── page.tsx
+│   │   └── loading.tsx                # ローディングスケルトン
+│   └── api/                           # App Router用のAPIルート
+│       ├── users/                     # ユーザーAPI
+│       │   └── route.ts               # REST APIハンドラー
+│       ├── products/                  # 商品API
+│       │   └── route.ts               # REST APIハンドラー
+│
+├── 01_domain/                            # ドメイン層
+│   ├── entities/                      # エンティティ
+│   │   ├── User.ts                    # ユーザーエンティティ
+│   │   └── Product.ts                 # 商品エンティティ
+│   ├── valueObjects/                  # 値オブジェクト
+│   │   ├── Price.ts                   # 商品価格値オブジェクト
+│   │   └── Email.ts                   # メール値オブジェクト
+│   └── types/                         # ドメイン固有の型
+│       ├── UserTypes.ts               # ユーザー型
+│       └── ProductTypes.ts            # 商品型
+│
+├── 02_application/                       # アプリケーション層（ユースケースや状態管理）
+│   ├── hooks/                         # カスタムフック
+│   │   ├── useFetchUsers.ts           # ユーザー取得
+│   │   ├── useFetchProducts.ts        # 商品取得
+│   │   └── useUserAuth.ts             # 認証状態管理
+│   ├── state/                         # 状態管理（React ContextやZustandなど）
+│   │   ├── authStore.ts               # 認証情報管理
+│   │   ├── userStore.ts               # ユーザー情報管理
+│   │   └── productStore.ts            # 商品情報管理
+│   └── types/                         # アプリケーション層の型
+│       ├── AuthTypes.ts               # 認証関連型
+│       ├── StateTypes.ts              # 状態管理型
+│       └── HookTypes.ts               # カスタムフック型
+│
+├── 03_infrastructure/                 # インフラストラクチャ層
+│   ├── api/                           # APIクライアント
+│   │   ├── clients/                   # HTTPクライアント（Axios設定など）
+│   │   │   └── httpClient.ts
+│   │   ├── services/                  # 各リソース用のAPIサービス
+│   │   │   ├── userService.ts         # ユーザー関連APIサービス
+│   │   │   └── productService.ts      # 商品関連APIサービス
+│   │   └── types/                     # APIレスポンス型
+│   │       ├── UserDTO.ts             # ユーザーDTO型
+│   │       ├── ProductDTO.ts          # 商品DTO型
+│   │       └── ApiResponse.ts         # 共通レスポンス型
+│   ├── storage/                       # ストレージ操作
+│   │   ├── localStorage.ts            # ローカルストレージ操作
+│   │   └── sessionStorage.ts          # セッションストレージ操作
+│   └── external/                      # 外部サービス連携
+│       └── firebaseClient.ts          # Firebase設定
+│
+├── 04_interface/                      # インターフェース層
+│   ├── app/                           # App Routerディレクトリ
+│   │   ├── layout.tsx                 # 共通レイアウト
+│   │   ├── page.tsx                   # ホームページ
+│   │   ├── users/                     # ユーザーページ
+│   │   │   ├── page.tsx               # ユーザー一覧
+│   │   │   └── [id]/                  # 動的ルート
+│   │   │       └── page.tsx           # ユーザー詳細
+│   │   └── api/                       # APIルート
+│   │       ├── users/                 # ユーザーAPI
+│   │       │   └── route.ts           # REST APIハンドラー
+│   │       ├── products/              # 商品API
+│   │       │   └── route.ts           # REST APIハンドラー
+│   │       └── auth/                  # 認証API
+│   │           └── route.ts
+│   │
+│   ├── components/                    # 再利用可能なUIコンポーネント
+│   │   ├── common/                    # 汎用コンポーネント
+│   │   │   ├── Button.tsx             # ボタン
+│   │   │   └── Modal.tsx              # モーダル
+│   │   ├── layout/                    # レイアウト関連
+│   │   │   ├── Header.tsx             # ヘッダー
+│   │   │   └── Footer.tsx             # フッター
+│   │   ├── users/                     # ユーザー関連コンポーネント
+│   │   │   └── UserCard.tsx           # ユーザーカード
+│   │   └── products/                  # 商品関連コンポーネント
+│   │       └── ProductList.tsx        # 商品一覧
+│   ├── pages/                         # ページコンポーネント
+│   │   ├── HomePage.tsx               # ホームページ
+│   │   ├── UsersPage.tsx              # ユーザーページ
+│   │   └── ProductsPage.tsx           # 商品ページ
+│   └── styles/                        # スタイル
+│       ├── index.css                  # グローバルスタイル
+│       └── theme.ts                   # テーマ設定
+│
+├── shared/                            # 再利用可能な型や定数
+│   ├── types/                         # 共通型定義
+│   │   ├── CommonTypes.ts             # 汎用型（例: ID, Nullable）
+│   │   ├── PaginationTypes.ts         # ページング型
+│   │   └── ApiResponseTypes.ts        # APIレスポンス共通型
+│   ├── constants/                     # 定数
+│   │   ├── apiEndpoints.ts            # APIエンドポイント
+│   │   └── appConfig.ts               # アプリ設定
+│   └── helpers/                       # 汎用ヘルパー関数
+│       ├── formatDate.ts              # 日付フォーマット
+│       └── logger.ts                  # ログ出力
+│
+└── utils/                             # 汎用的なユーティリティ関数
+    ├── formatDate.ts                  # 日付フォーマット
+    ├── logger.ts                      # ログ出力
+    └── validators.ts                  # 入力バリデーション
 ```
 
 ### React (基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かもしれない)
@@ -502,7 +589,7 @@ src/
 │   └── external/                      # 外部サービス連携
 │       └── firebaseClient.ts          # Firebaseクライアント設定
 │
-├── 04_interface/                         # インターフェース層（UIとプレゼンテーション）
+├── 04_interface/                      # インターフェース層（UIとプレゼンテーション）
 │   ├── components/                    # 再利用可能なUIコンポーネント
 │   │   ├── common/                    # 汎用コンポーネント
 │   │   │   ├── Button.tsx             # ボタン
