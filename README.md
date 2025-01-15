@@ -119,67 +119,123 @@ app/
 
 ```
 spec/
-├── domain/                   # ドメイン層に関するテスト
-│   ├── entities/             # ドメインエンティティのテスト
-│   │   └── user_spec.rb
-│   └── repositories/         # リポジトリインターフェースのテスト
-│        ├── commands/
-│        │    └── active_record_user_commands_spec.rb
-│        └── queries/
-│             └── active_record_user_queries_spec.rb
+├── factories/
+│   ├── users.rb          # Userモデルのファクトリー
+│   ├── orders.rb         # Orderモデルのファクトリー
+│   ├── shopping_carts.rb # ShoppingCartモデルのファクトリー
+│   └── shared/
+│       ├── addresses.rb  # 共有値オブジェクト（住所など）のファクトリー
+│       └── ...
+├── domain/
+│   ├── aggregates/
+│   │   ├── shopping_cart/
+│   │   │   ├── shopping_cart_spec.rb
+│   │   │   ├── entities/
+│   │   │   │   ├── shopping_cart_item_spec.rb
+│   │   │   │   └── discount_spec.rb
+│   │   │   ├── value_objects/
+│   │   │   │   ├── product_id_spec.rb
+│   │   │   │   └── money_spec.rb
+│   │   │   ├── services/
+│   │   │   │   └── calculate_cart_total_service_spec.rb
+│   │   │   └── repositories/
+│   │   │       ├── commands/
+│   │   │       │   └── shopping_cart_command_repository_spec.rb
+│   │   │       └── queries/
+│   │   │           └── shopping_cart_query_repository_spec.rb
+│   │   ├── order/
+│   │   │   ├── order_spec.rb
+│   │   │   ├── entities/
+│   │   │   │   ├── order_item_spec.rb
+│   │   │   │   ├── shipping_detail_spec.rb
+│   │   │   │   └── payment_detail_spec.rb
+│   │   │   ├── value_objects/
+│   │   │   │   ├── money_spec.rb
+│   │   │   │   ├── address_spec.rb
+│   │   │   │   └── tax_rate_spec.rb
+│   │   │   ├── services/
+│   │   │   │   └── calculate_order_total_service_spec.rb
+│   │   │   └── repositories/
+│   │   │       ├── commands/
+│   │   │       │   └── order_command_repository_spec.rb
+│   │   │       └── queries/
+│   │   │           └── order_query_repository_spec.rb
+│   │   └── user/
+│   │       ├── user_spec.rb
+│   │       ├── entities/
+│   │       │   ├── user_profile_spec.rb
+│   │       │   └── user_preferences_spec.rb
+│   │       ├── value_objects/
+│   │       │   ├── email_spec.rb
+│   │       │   ├── password_spec.rb
+│   │       │   └── address_spec.rb
+│   │       ├── services/
+│   │       │   └── password_encryption_service_spec.rb
+│   │       └── repositories/
+│   │           ├── commands/
+│   │           │   └── user_command_repository_spec.rb
+│   │           └── queries/
+│   │               └── user_query_repository_spec.rb
+│   ├── shared/
+│   │   ├── value_objects/
+│   │   │   ├── money_spec.rb
+│   │   │   ├── address_spec.rb
+│   │   │   └── email_spec.rb
+│   │   └── services/
+│   │       └── tax_calculator_service_spec.rb
+│   └── services/
+│       ├── shipping_cost_service_spec.rb
+│       └── calculate_tax_service_spec.rb
 │
-├── use_cases/                   # ユースケース層のテスト
+├── use_cases/
 │   └── users/
-│       ├── create_user_spec.rb           # ユースケース: ユーザー作成
-│       ├── update_user_spec.rb           # ユースケース: ユーザー更新
-│       ├── delete_user_spec.rb           # ユースケース: ユーザー削除
-│       └── get_user_spec.rb              # ユースケース: ユーザー取得
+│       ├── web/
+│       │   ├── register_user_web_spec.rb
+│       │   ├── ban_user_web_spec.rb
+│       │   └── withdraw_user_web_spec.rb
+│       └── mobile/
+│           ├── register_user_mobile_spec.rb
+│           ├── ban_user_mobile_spec.rb
+│           └── withdraw_user_mobile_spec.rb
 │
-├── infrastructure/           # インフラストラクチャ層のテスト
-│   ├── repositories/         # リポジトリ実装のテスト (ActiveRecordなど)
-│   │    ├── commands/
-│   │    │    └── active_record_user_commands_spec.rb  # 書き込み系
-│   │    └── queries/
-│   │         └── active_record_user_queries_spec.rb 　# 読み取り系
-│   ├── services/                    # サービス層 (汎用的な処理)
-│   │    ├── api/
-│   │    │    ├── payment_service.rb       # （モバイルの）支払いサービス
-│   │    │    └── ....
-│   │    ├── wapi/
-│   │    │    ├── payment_service.rb       # （Webの）支払いサービス
-│   │    │    └── ....
-│   │    ├── admin/
-│   │    │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
-│   │    │    └── ....
-│   │    └── share
-│   │        　├── email_service.rb         # メール送信サービス
-│   │        　├── payment_service.rb       # 支払いサービス
-│   │        　└── notification_service.rb  # 通知サービス
-│   └── external_apis/        # 外部API連携のテスト
+├── infrastructure/
+│   ├── repositories/
+│   │   ├── commands/
+│   │   │   └── active_record_user_commands_spec.rb
+│   │   └── queries/
+│   │       └── active_record_user_queries_spec.rb
+│   ├── services/
+│   │   ├── api/
+│   │   │   └── payment_service_spec.rb
+│   │   ├── wapi/
+│   │   │   └── payment_service_spec.rb
+│   │   ├── admin/
+│   │   │   └── email_service_spec.rb
+│   │   └── common/
+│   │       ├── email_service_spec.rb
+│   │       ├── payment_service_spec.rb
+│   │       └── notification_service_spec.rb
+│   └── external_apis/
 │       └── payment_gateway_api_spec.rb
 │
-├── interfaces/               # インターフェース層のテスト
-│   ├── requests/          # コントローラのリクエストスペック
-│   │   ├── api/
-│   │   │   └── users_controller_request_spec.rb
-│   │   ├── admin/
-│   │   │   └── users_controller_request_spec.rb
-│   │   ├── wapi/
-│   │   │   └── users_controller_request_spec.rb
-│   │   └── share
-│   │       ├── email_service_spec.rb         # メール送信サービス
-│   │       ├── payment_service_spec.rb       # 支払いサービス
-│   │       └── notification_service_spec.rb  # 通知サービス
-│   └── serializers/          # シリアライザのテスト
-│       └── user_serializer_spec.rb
-│
-└── support/                  # テストのヘルパーモジュールや共通設定
-    ├── factories/            # FactoryBotのファクトリ
-    │   └── users.rb
-    ├── shared_examples/      # 共通のテストケース
-    │   └── user_repository_examples.rb
-    └── helpers/              # カスタムヘルパー
-        └── api_helper.rb
+└── interfaces/
+    ├── controllers/
+    │   ├── api/
+    │   │   └── v1/
+    │   │       └── users_controller_spec.rb
+    │   ├── wapi/
+    │   │   └── v1/
+    │   │       └── users_controller_spec.rb
+    │   └── admin/
+    │       └── users_controller_spec.rb
+    ├── views/
+    │   └── users/
+    │       └── index_spec.rb
+    ├── presenters/
+    │   └── user_presenter_spec.rb
+    └── serializers/
+        └── user_serializer_spec.rb
+
 ```
 
 
