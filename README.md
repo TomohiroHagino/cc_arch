@@ -1,4 +1,7 @@
 # クリーンアーキテクチャを意識したRailsのファイル構成
+https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
+こちらの記事を参考にさせていただきました
+
 ```
 app/
 ├── domain/ # ドメイン層
