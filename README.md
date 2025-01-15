@@ -84,7 +84,7 @@ app/
 │            ├── ban_user_mobile.rb            # ユースケース: ユーザー更新（垢BAN
 │            └── withdraw_user_mobile.rb       # ユースケース: ユーザー退会
 │
-├── infrastructure/              # フレームワーク & ドライバ層
+├── infrastructure/              # インフラストラクチャー層
 │   ├── repositories/            # リポジトリ実装
 │   │    ├── commands/
 │   │    │    └── active_record_user_command_repository.rb  # 書き込み系
@@ -202,7 +202,7 @@ spec/
 │            ├── ban_user_mobile_spec.rb            # ユースケース: ユーザー更新（垢BAN）のテスト
 │            └── withdraw_user_mobile_spec.rb       # ユースケース: ユーザー退会のテスト
 │
-├── infrastructure/              # フレームワーク & ドライバ層
+├── infrastructure/              # インフラストラクチャー層
 │   ├── repositories/            # リポジトリ実装のテスト
 │   │    ├── commands/
 │   │    │    └── active_record_user_command_repository_spec.rb  # 書き込み系リポジトリのテスト
