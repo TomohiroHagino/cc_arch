@@ -1,4 +1,4 @@
-# クリーンアーキテクチャを意識したRailsのファイル構成
+# クリーンアーキテクチャを意識した各フレームワークのファイル構成
 https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
 こちらの記事で勉強させていただきました
 
@@ -6,6 +6,7 @@ https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
 
 <img src="https://private-user-images.githubusercontent.com/43706329/403336022-9b4c3007-c38d-40ab-b516-bae1db5030de.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzY5MzE3MjcsIm5iZiI6MTczNjkzMTQyNywicGF0aCI6Ii80MzcwNjMyOS80MDMzMzYwMjItOWI0YzMwMDctYzM4ZC00MGFiLWI1MTYtYmFlMWRiNTAzMGRlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAxMTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMTE1VDA4NTcwN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTg0OGNlNjk3MmM5NzU5OWEyMzg5ZjYyYTQ5Mzk4ZGEyMmVjZGUwNDY0NjAyMzIyNDljNWQzNzc5ZDVjNDRmODcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.n02ErfuYWdfX9HtHXzm9Cy3VaG5mo1CddUbOVF1gbsw" width="33%">
 
+# Rails
 
 ```
 app/
@@ -423,7 +424,7 @@ project/
 └── manage.py
 ```
 
-Next.js（バックエンドを用意して、フロントエンドではスタイルを整えて基本表示させるだけ）
+### Next.js（バックエンドを用意して、フロントエンドではスタイルを整えて基本表示させるだけ）
 ```
 src/
 ├── app/                     # App Routerディレクトリ (ページとレイアウト)
@@ -452,3 +453,47 @@ src/
 └── utils/                   # ユーティリティ関数
     └── formatDate.ts        # 日付フォーマットなどの関数
 ```
+
+### React (openapi使ってもいいかもしれない)
+```
+src/
+│
+├── api/                  # API通信を管理
+│   ├── clients/          # APIクライアント
+│   │   └── httpClient.ts # 共通のHTTPクライアント（axiosなどをラップ）
+│   ├── services/         # 各リソース用のAPIサービス
+│   │   ├── userService.ts      # ユーザー関連API
+│   │   └── productService.ts   # 商品関連API
+│   └── types/            # APIレスポンスの型定義
+│       ├── user.ts       # ユーザー関連型
+│       └── product.ts    # 商品関連型
+│
+├── components/           # 再利用可能なUIコンポーネント
+│   ├── common/           # 汎用コンポーネント（ボタン、入力フィールドなど）
+│   │   └── Button.tsx
+│   ├── layout/           # レイアウト用コンポーネント
+│   │   └── Header.tsx
+│   ├── users/            # ユーザー関連コンポーネント
+│   │   └── UserCard.tsx
+│   └── products/         # 商品関連コンポーネント
+│       └── ProductList.tsx
+│
+├── hooks/                # カスタムフック（データ取得や状態管理）
+│   ├── useFetchUsers.ts  # ユーザー一覧取得
+│   └── useFetchProducts.ts # 商品一覧取得
+│
+├── pages/                # 各ページ（React Routerと連携）
+│   ├── HomePage.tsx      # ホームページ
+│   ├── UsersPage.tsx     # ユーザー一覧ページ
+│   └── ProductsPage.tsx  # 商品一覧ページ
+│
+├── styles/               # グローバルスタイルやCSS
+│   └── index.css         # 共通スタイル
+│
+├── utils/                # ヘルパー関数や共通ロジック
+│   └── formatDate.ts     # 日付フォーマット関数
+│
+├── App.tsx               # ルートコンポーネント
+└── index.tsx             # エントリーポイント
+```
+
