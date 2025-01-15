@@ -424,29 +424,10 @@ project/
 └── manage.py
 ```
 
-### Next.js（基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かもしれない）
+### Next.js（App Routerで。基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かも）
 ```
 src/
-├── app/                               # App Routerのルートディレクトリ
-│   ├── layout.tsx                     # 共通レイアウト
-│   ├── page.tsx                       # ホームページ
-│   ├── users/                         # ユーザーページ
-│   │   ├── page.tsx                   # ユーザー一覧ページ
-│   │   ├── [id]/                      # 動的ルート: ユーザー詳細ページ
-│   │   │   └── page.tsx
-│   │   └── loading.tsx                # ローディングスケルトン
-│   ├── products/                      # 商品ページ
-│   │   ├── page.tsx                   # 商品一覧ページ
-│   │   ├── [id]/                      # 動的ルート: 商品詳細ページ
-│   │   │   └── page.tsx
-│   │   └── loading.tsx                # ローディングスケルトン
-│   └── api/                           # App Router用のAPIルート
-│       ├── users/                     # ユーザーAPI
-│       │   └── route.ts               # REST APIハンドラー
-│       ├── products/                  # 商品API
-│       │   └── route.ts               # REST APIハンドラー
-│
-├── 01_domain/                            # ドメイン層
+├── 01_domain/                         # ドメイン層
 │   ├── entities/                      # エンティティ
 │   │   ├── User.ts                    # ユーザーエンティティ
 │   │   └── Product.ts                 # 商品エンティティ
@@ -494,15 +475,18 @@ src/
 │   │   ├── page.tsx                   # ホームページ
 │   │   ├── users/                     # ユーザーページ
 │   │   │   ├── page.tsx               # ユーザー一覧
-│   │   │   └── [id]/                  # 動的ルート
-│   │   │       └── page.tsx           # ユーザー詳細
-│   │   └── api/                       # APIルート
-│   │       ├── users/                 # ユーザーAPI
-│   │       │   └── route.ts           # REST APIハンドラー
-│   │       ├── products/              # 商品API
-│   │       │   └── route.ts           # REST APIハンドラー
-│   │       └── auth/                  # 認証API
-│   │           └── route.ts
+│   │   │   ├── [id]/                  # 動的ルート
+│   │   │   │   └── page.tsx           # ユーザー詳細
+│   │   │   └── types/                 # ユーザーページ固有の型
+│   │   │       ├── UserPageProps.ts   # ページプロパティ型
+│   │   │       └── UserDetailProps.ts # 詳細ページプロパティ型
+│   │   └── products/                  # 商品ページ
+│   │       ├── page.tsx               # 商品一覧
+│   │       ├── [id]/                  # 商品詳細
+│   │       │   └── page.tsx
+│   │       └── types/                 # 商品ページ固有の型
+│   │           ├── ProductPageProps.ts # ページプロパティ型
+│   │           └── ProductDetailProps.ts # 詳細ページプロパティ型
 │   │
 │   ├── components/                    # 再利用可能なUIコンポーネント
 │   │   ├── common/                    # 汎用コンポーネント
@@ -541,10 +525,10 @@ src/
     └── validators.ts                  # 入力バリデーション
 ```
 
-### React (基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かもしれない)
+### React (基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かも)
 ```
 src/
-├── 01_domain/                            # ドメイン層
+├── 01_domain/                         # ドメイン層
 │   ├── entities/                      # エンティティ
 │   │   ├── Product.ts                 # 商品エンティティ
 │   │   └── User.ts                    # ユーザーエンティティ
@@ -555,7 +539,7 @@ src/
 │       ├── ProductTypes.ts            # 商品関連型
 │       └── UserTypes.ts               # ユーザー関連型
 │
-├── 02_application/                       # アプリケーション層（ユースケース・状態管理）
+├── 02_application/                    # アプリケーション層（ユースケース・状態管理）
 │   ├── hooks/                         # カスタムフック
 │   │   ├── useFetchUsers.ts           # ユーザー一覧取得
 │   │   ├── useFetchProducts.ts        # 商品一覧取得
