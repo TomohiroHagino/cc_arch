@@ -2,23 +2,66 @@
 #### こんな感じに構成を組めたら、とてもスッキリすると思ってます
 ```
 app/
-├── domain/  # ドメイン層（アプリケーションの核となるビジネスロジックやルールを扱う層)
-│   ├── entities/  # エンティティ
-│   │   ├── user.rb
-│   │   ├── order.rb
-│   │   └── product.rb
-│   ├── value_objects/ # 値オブジェクト
-│   │   ├── money.rb
-│   │   ├── address.rb
-│   │   └── email.rb
-│   ├── services/  # ドメインサービス層（エンティティや値オブジェクトだけでは表現しづらいビジネスロジックを定義する）
-│   │   ├── shipping_cost_service.rb       # ドメインサービス: 配送費計算
-│   │   └── calculate_tax_service.rb       # ドメインサービス: 税計算
-│   └── repositories/   # リポジトリ（アダプター）
-│        ├── commands/
-│        │    └── active_record_user_commands.rb  # 書き込み系
-│        └── queries/
-│             └── active_record_user_queries.rb 　# 読み取り系
+├── domain/
+│   ├── aggregates/             # アグリゲートを管理するフォルダ
+│   │   ├── shopping_cart/      # ショッピングカートアグリゲート
+│   │   │   ├── shopping_cart.rb       # アグリゲートルート
+│   │   │   ├── entities/              # エンティティを格納
+│   │   │   │   ├── shopping_cart_item.rb  # ショッピングカートアイテムエンティティ
+│   │   │   │   └── discount.rb            # 割引情報のエンティティ（例）
+│   │   │   ├── value_objects/          # 値オブジェクトを格納
+│   │   │   │   ├── product_id.rb          # 商品ID（値オブジェクト）
+│   │   │   │   └── money.rb               # 金額（値オブジェクト）
+│   │   │   ├── services/               # ドメインサービス
+│   │   │   │   └── calculate_cart_total_service.rb  # カート合計金額計算
+│   │   │   └── repositories/           # リポジトリ
+│   │   │       ├── commands/
+│   │   │       │   └── shopping_cart_command_repository.rb
+│   │   │       └── queries/
+│   │   │           └── shopping_cart_query_repository.rb
+│   │   ├── order/              # 注文アグリゲート
+│   │   │   ├── order.rb                # アグリゲートルート
+│   │   │   ├── entities/               # エンティティを格納
+│   │   │   │   ├── order_item.rb          # 注文アイテムエンティティ
+│   │   │   │   ├── shipping_detail.rb     # 配送情報エンティティ
+│   │   │   │   └── payment_detail.rb      # 支払い情報エンティティ
+│   │   │   ├── value_objects/          # 値オブジェクトを格納
+│   │   │   │   ├── money.rb               # 金額（値オブジェクト）
+│   │   │   │   ├── address.rb             # 住所（値オブジェクト）
+│   │   │   │   └── tax_rate.rb            # 税率（値オブジェクト）
+│   │   │   ├── services/               # ドメインサービス
+│   │   │   │   └── calculate_order_total_service.rb # 注文合計金額計算
+│   │   │   └── repositories/           # リポジトリ
+│   │   │       ├── commands/
+│   │   │       │   └── order_command_repository.rb
+│   │   │       └── queries/
+│   │   │           └── order_query_repository.rb
+│   │   └── user/               # ユーザーアグリゲート
+│   │       ├── user.rb                 # アグリゲートルート
+│   │       ├── entities/               # エンティティを格納
+│   │       │   ├── user_profile.rb        # ユーザープロファイルエンティティ
+│   │       │   └── user_preferences.rb    # ユーザー設定エンティティ
+│   │       ├── value_objects/          # 値オブジェクトを格納
+│   │       │   ├── email.rb              # メール（値オブジェクト）
+│   │       │   ├── password.rb           # パスワード（値オブジェクト）
+│   │       │   └── address.rb            # 住所（値オブジェクト）
+│   │       ├── services/               # ドメインサービス
+│   │       │   └── password_encryption_service.rb  # パスワード暗号化
+│   │       └── repositories/           # リポジトリ
+│   │           ├── commands/
+│   │           │   └── user_command_repository.rb
+│   │           └── queries/
+│   │               └── user_query_repository.rb
+│   ├── shared/                 # 共有される値オブジェクトやサービス
+│   │   ├── value_objects/
+│   │   │   ├── money.rb        # 共有の金額値オブジェクト
+│   │   │   ├── address.rb      # 共有の住所値オブジェクト
+│   │   │   └── email.rb        # 共有のメール値オブジェクト
+│   │   └── services/
+│   │       └── tax_calculator_service.rb  # 税金計算
+│   └── services/              # ドメイン全体で使用するサービス
+│       ├── shipping_cost_service.rb       # 配送料計算
+│       └── calculate_tax_service.rb       # 税金計算
 │
 ├── use_cases/ # ユースケース層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
 │   └── users/
