@@ -457,65 +457,87 @@ src/
 ### React (基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かもしれない)
 ```
 src/
-├── domain/                        # ドメイン層
-│   ├── entities/                  # エンティティ
-│   └── valueObjects/              # 値オブジェクト
-├── application/                   # アプリケーション層（ユースケース管理、状態管理）
-│   ├── hooks/                     # カスタムフック（データ取得や状態管理）
-│   │   ├── useFetchUsers.ts       # ユーザー一覧取得
-│   │   ├── useFetchProducts.ts    # 商品一覧取得
-│   │   └── useUserAuth.ts         # 認証状態管理
-│   └── state/                     # グローバル状態管理（必要に応じて）
-│       ├── auth/                  # 認証関連の状態
-│       │   ├── authSlice.ts       # 認証情報のReduxスライス
-│       │   └── authActions.ts     # 認証関連のアクション
-│       ├── products/              # 商品関連の状態
-│       │   ├── productSlice.ts    # 商品情報のReduxスライス
-│       │   └── productActions.ts  # 商品関連のアクション
-│       └── store.ts               # Redux Storeの設定
+├── domain/                            # ドメイン層
+│   ├── entities/                      # エンティティ
+│   │   ├── Product.ts                 # 商品エンティティ
+│   │   └── User.ts                    # ユーザーエンティティ
+│   ├── valueObjects/                  # 値オブジェクト
+│   │   ├── Price.ts                   # 金額値オブジェクト
+│   │   └── Address.ts                 # 住所値オブジェクト
+│   └── types/                         # ドメイン層固有の型
+│       ├── ProductTypes.ts            # 商品関連型
+│       └── UserTypes.ts               # ユーザー関連型
 │
-├── infrastructure/       # インフラストラクチャー層（外部リソースとの通信）
-│   ├── api/              # API通信ロジック
-│   │   ├── clients/      # HTTPクライアント
-│   │   │   └── httpClient.ts      # Axios設定
-│   │   ├── services/              # 各リソース用のAPI呼び出し
-│   │   │   ├── userService.ts     # ユーザー関連API
-│   │   │   └── productService.ts  # 商品関連API
-│   │   └── types/                 # APIレスポンスの型定義
-│   │       ├── user.ts            # ユーザー型
-│   │       └── product.ts         # 商品型
-│   ├── storage/                   # ストレージ操作（必要に応じて）
-│   │   ├── localStorage.ts        # ローカルストレージ操作
-│   │   └── sessionStorage.ts      # セッションストレージ操作
-│   └── external/                  # 外部サービス連携（必要に応じて）
-│       └── firebaseClient.ts      # Firebaseクライアント設定
+├── application/                       # アプリケーション層（ユースケース・状態管理）
+│   ├── hooks/                         # カスタムフック
+│   │   ├── useFetchUsers.ts           # ユーザー一覧取得
+│   │   ├── useFetchProducts.ts        # 商品一覧取得
+│   │   └── useUserAuth.ts             # 認証状態管理
+│   ├── state/                         # グローバル状態管理
+│   │   ├── auth/                      # 認証関連の状態
+│   │   │   ├── authSlice.ts           # Reduxスライス
+│   │   │   └── authActions.ts         # 認証アクション
+│   │   ├── products/                  # 商品関連の状態
+│   │   │   ├── productSlice.ts        # Reduxスライス
+│   │   │   └── productActions.ts      # 商品アクション
+│   │   └── store.ts                   # Reduxストア設定
+│   └── types/                         # アプリケーション層の型
+│       ├── AuthTypes.ts               # 認証関連型
+│       └── StateTypes.ts              # 状態管理型
 │
-├── interface/            # インターフェース層（UIとプレゼンテーション層）
-│   ├── components/       # 再利用可能なUIコンポーネント
-│   │   ├── common/       # 汎用コンポーネント（ボタン、モーダルなど）
-│   │   │   ├── Button.tsx
-│   │   │   └── Modal.tsx
-│   │   ├── layout/       # レイアウト関連（ヘッダー、フッターなど）
-│   │   │   ├── Header.tsx
-│   │   │   └── Footer.tsx
-│   │   ├── users/        # ユーザー関連コンポーネント
-│   │   │   └── UserCard.tsx
-│   │   └── products/     # 商品関連コンポーネント
-│   │       └── ProductList.tsx
-│   ├── pages/            # ページコンポーネント（React Routerと連携）
-│   │   ├── HomePage.tsx
-│   │   ├── UsersPage.tsx
-│   │   └── ProductsPage.tsx
-│   └── styles/           # スタイル関連
-│       ├── index.css     # グローバルスタイル
-│       └── theme.ts      # テーマ設定
+├── infrastructure/                    # インフラストラクチャ層（外部リソースとの通信）
+│   ├── api/                           # API通信
+│   │   ├── clients/                   # HTTPクライアント
+│   │   │   └── httpClient.ts          # Axios設定
+│   │   ├── services/                  # 各リソース用API呼び出し
+│   │   │   ├── userService.ts         # ユーザー関連API
+│   │   │   └── productService.ts      # 商品関連API
+│   │   └── types/                     # APIレスポンス型
+│   │       ├── UserDTO.ts             # ユーザーDTO型
+│   │       ├── ProductDTO.ts          # 商品DTO型
+│   │       └── ApiResponse.ts         # 共通レスポンス型
+│   ├── storage/                       # ストレージ操作
+│   │   ├── localStorage.ts            # ローカルストレージ操作
+│   │   └── sessionStorage.ts          # セッションストレージ操作
+│   └── external/                      # 外部サービス連携
+│       └── firebaseClient.ts          # Firebaseクライアント設定
 │
-├── utils/                # ユーティリティ（補助的な関数や共通ロジック）
-│   ├── formatDate.ts     # 日付フォーマット関数
-│   ├── logger.ts         # ログ出力
-│   └── validators.ts     # バリデーションロジック
+├── interface/                         # インターフェース層（UIとプレゼンテーション）
+│   ├── components/                    # 再利用可能なUIコンポーネント
+│   │   ├── common/                    # 汎用コンポーネント
+│   │   │   ├── Button.tsx             # ボタン
+│   │   │   └── Modal.tsx              # モーダル
+│   │   ├── layout/                    # レイアウト関連
+│   │   │   ├── Header.tsx             # ヘッダー
+│   │   │   └── Footer.tsx             # フッター
+│   │   ├── users/                     # ユーザー関連コンポーネント
+│   │   │   └── UserCard.tsx           # ユーザーカード
+│   │   └── products/                  # 商品関連コンポーネント
+│   │       └── ProductList.tsx        # 商品一覧
+│   ├── pages/                         # ページコンポーネント
+│   │   ├── HomePage.tsx               # ホームページ
+│   │   ├── UsersPage.tsx              # ユーザーページ
+│   │   └── ProductsPage.tsx           # 商品ページ
+│   └── styles/                        # スタイル
+│       ├── index.css                  # グローバルスタイル
+│       └── theme.ts                   # テーマ設定
 │
-├── App.tsx               # アプリケーション全体のエントリーポイント
-└── index.tsx             # Reactアプリの起動スクリプト
+├── shared/                            # 共有リソース
+│   └── types/                         # 再利用可能な型
+│       ├── CommonTypes.ts             # 汎用型（例: ID, Nullable）
+│       ├── PaginationTypes.ts         # ページング関連型
+│       └── ApiResponseTypes.ts        # 共通APIレスポンス型
+│
+├── utils/                             # ユーティリティ関数
+│   ├── formatDate.ts                  # 日付フォーマット
+│   ├── logger.ts                      # ログ出力
+│   ├── validators.ts                  # バリデーション
+│   └── types/                         # ユーティリティ型
+│       ├── LoggerTypes.ts             # ログ関連型
+│       └── ValidatorTypes.ts          # バリデーション関連型
+│
+├── App.tsx                            # アプリケーション全体のエントリーポイント
+└── index.tsx                          # Reactアプリの起動スクリプト
+
 ```
 
