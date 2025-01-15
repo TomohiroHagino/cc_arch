@@ -15,11 +15,11 @@ app/
 │   │   ├── shopping_cart/      # ショッピングカートアグリゲート
 │   │   │   ├── shopping_cart.rb       # アグリゲートルート
 │   │   │   ├── entities/              # エンティティを格納
-│   │   │   │   ├── shopping_cart_item.rb  # ショッピングカートアイテムエンティティ
-│   │   │   │   └── discount.rb            # 割引情報のエンティティ（例）
-│   │   │   ├── value_objects/          # 値オブジェクトを格納
-│   │   │   │   ├── product_id.rb          # 商品ID（値オブジェクト）
-│   │   │   │   └── money.rb               # 金額（値オブジェクト）
+│   │   │   │   ├── item.rb            # ショッピングカートアイテムエンティティ
+│   │   │   │   └── discount.rb        # 割引情報のエンティティ（例）
+│   │   │   ├── value_objects/           # 値オブジェクトを格納
+│   │   │   │   ├── product_id.rb        # 商品ID（値オブジェクト）
+│   │   │   │   └── money.rb             # 金額（値オブジェクト）
 │   │   │   ├── services/               # ドメインサービス
 │   │   │   │   └── calculate_cart_total_service.rb  # カート合計金額計算
 │   │   │   └── repositories/           # リポジトリ
