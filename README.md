@@ -1,7 +1,7 @@
 # クリーンアーキテクチャを意識したRailsのファイル構成
 ```
 app/
-├── domain/
+├── domain/ # ドメイン層
 │   ├── aggregates/             # アグリゲートを管理するフォルダ
 │   │   ├── shopping_cart/      # ショッピングカートアグリゲート
 │   │   │   ├── shopping_cart.rb       # アグリゲートルート
@@ -51,7 +51,7 @@ app/
 │   │           │   └── user_command_repository.rb
 │   │           └── queries/
 │   │               └── user_query_repository.rb
-│   ├── shared/                 # 共有される値オブジェクトやサービス
+│   ├── shared/                 # ドメイン全体で共有される値オブジェクトやサービス
 │   │   ├── value_objects/
 │   │   │   ├── money.rb        # 共有の金額値オブジェクト
 │   │   │   ├── address.rb      # 共有の住所値オブジェクト
@@ -76,10 +76,10 @@ app/
 ├── infrastructure/              # フレームワーク & ドライバ層
 │   ├── repositories/            # リポジトリ実装
 │   │    ├── commands/
-│   │    │    └── active_record_user_commands.rb  # 書き込み系
+│   │    │    └── active_record_user_command_repository.rb  # 書き込み系
 │   │    └── queries/
-│   │         └── active_record_user_queries.rb 　# 読み取り系
-│   ├── services/                    # サービス層 (汎用的な処理)
+│   │         └── active_record_user_query_repository.rb 　# 読み取り系
+│   ├── services/  # サービス層 (汎用的な処理)
 │   │    ├── api/
 │   │    │    ├── payment_service.rb       # （API用）支払いサービス
 │   │    │    └── ....
