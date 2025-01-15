@@ -763,8 +763,8 @@ MyComposeApp/
 │   │       │   ├── drawable/             # 画像リソース
 │   │       │   └── mipmap/               # アイコンリソース
 │   │       └── test/                     # テストコード
-│   │       ├── ExampleUnitTest.kt
-│   │       └── ExampleInstrumentedTest.kt
+│   │           ├── ExampleUnitTest.kt
+│   │           └── ExampleInstrumentedTest.kt
 |   └──  build.gradle(app)                # アプリのGradle設定
 ├── build.gradle(project)                 # プロジェクト全体のGradle設定
 ├── settings.gradle                       # Gradleの設定ファイル
