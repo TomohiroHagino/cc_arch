@@ -236,7 +236,7 @@ spec/
     │     └── admin/
     │          └── users_controller_request_spec.rb
     │
-    ├── views/                  # ビューのテスト
+    ├── systems/
     │    └── users/
     │          └── index_spec.rb
     ├── presenters/                  # プレゼンターのテスト
