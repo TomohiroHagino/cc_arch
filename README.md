@@ -90,9 +90,9 @@ app/
 │   │    │    └── active_record_user_command_repository.rb  # 書き込み系
 │   │    └── queries/
 │   │         └── active_record_user_query_repository.rb 　# 読み取り系
-│   ├── models/ # ActiveRecordに紐づいてるモデル。　リレーションとバリデーションだけ定義する
-│   │
-│   └── external_apis/           # 外部APIとの連携
+│   ├── models/                 # ActiveRecordに紐づいてるモデル。アソシエーションだけ定義する。
+│   │                           #     バリデーションはドメイン層のエンティティと値オブジェクトで。
+│   └── external_apis/          # 外部APIとの連携
 │       └── payment_gateway_api.rb
 │
 ├── services/  # アプリケーションサービス層 (汎用的な処理)
