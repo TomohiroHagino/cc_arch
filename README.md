@@ -702,3 +702,73 @@ src/
     └── validators.ts                  # 入力バリデーション
 ```
 
+### Android(Kotlin, JetPack compose, MVVM)
+```
+MyComposeApp/
+├── app/
+│   ├── src/
+│   │   └── main/
+│   │       ├── AndroidManifest.xml       # アプリのマニフェスト
+│   │       ├── kotlin/com/example/mycomposeapp/
+│   │       │   ├── 01_domain/            # ドメイン層（アプリケーションの中心）
+│   │       │   │   ├── models/           # ビジネスモデル
+│   │       │   │   │   └── User.kt
+│   │       │   │   ├── usecases/         # ユースケース
+│   │       │   │   │   └── GetUserUseCase.kt
+│   │       │   │   └── repositories/     # リポジトリインターフェース
+│   │       │   │       └── UserRepository.kt
+│   │       │   ├── 02_application/       # アプリケーション層（ユースケース制御）
+│   │       │   │   ├── services/         # アプリケーションサービス
+│   │       │   │   └── types/            # アプリケーション層の型
+│   │       │   ├── 03_infrastructure/    # インフラストラクチャ層（外部接続）
+│   │       │   │   ├── data/             # データ層（インフラの一部）
+│   │       │   │   │   ├── repositories/ # リポジトリ実装
+│   │       │   │   │   │   └── UserRepositoryImpl.kt
+│   │       │   │   │   ├── datasources/  # データソース（APIやDBアクセス）
+│   │       │   │   │   │   └── UserApi.kt
+│   │       │   │   │   ├── mappers/      # データ変換（DTO→モデル）
+│   │       │   │   │   │   └── UserMapper.kt
+│   │       │   │   │   └── models/       # データ層のモデル（DTOなど）
+│   │       │   │   │       └── UserDto.kt
+│   │       │   │   ├── network/          # ネットワーク設定
+│   │       │   │   │   └── RetrofitClient.kt
+│   │       │   │   ├── database/         # データベース設定(必要に応じて)
+│   │       │   │   │   └── RoomDatabase.kt
+│   │       │   │   └── di/               # 依存性注入
+│   │       │   │       ├── RepositoryModule.kt
+│   │       │   │       ├── NetworkModule.kt
+│   │       │   │       └── DatabaseModule.kt
+│   │       │   ├── 04_presentation/      # プレゼンテーション層（UI）
+│   │       │   │   ├── screens/          # UI画面
+│   │       │   │   │   ├── UserScreen.kt # ユーザー画面
+│   │       │   │   │   ├── HomeScreen.kt # ホーム画面
+│   │       │   │   │   └── components/   # 再利用可能なUIコンポーネント
+│   │       │   │   │       └── UserCard.kt
+│   │       │   │   ├── viewmodels/       # ViewModel（状態管理）
+│   │       │   │   │   └── UserViewModel.kt
+│   │       │   │   └── navigation/       # ナビゲーション
+│   │       │   │       └── AppNavHost.kt
+│   │       │   ├── utils/                # 汎用ユーティリティ
+│   │       │   │   ├── Logger.kt
+│   │       │   │   └── Validator.kt
+│   │       │   └── constants/            # 定数
+│   │       │       └── AppConstants.kt
+│   │       ├── res/                      # リソース（Composeでは使用頻度が低い）
+│   │       │   ├── layout/               # XMLレイアウト（必要な場合のみ）
+│   │       │   │   └── activity_main.xml
+│   │       │   ├── values/               # 定義リソース
+│   │       │   │   ├── colors.xml
+│   │       │   │   ├── dimens.xml
+│   │       │   │   └── strings.xml
+│   │       │   ├── drawable/             # 画像リソース
+│   │       │   └── mipmap/               # アイコンリソース
+│   │       └── test/                     # テストコード
+│   │       ├── ExampleUnitTest.kt
+│   │       └── ExampleInstrumentedTest.kt
+|   └──  build.gradle(app)                # アプリのGradle設定
+├── build.gradle(project)                 # プロジェクト全体のGradle設定
+├── settings.gradle                       # Gradleの設定ファイル
+├── gradlew                               # Gradleラッパースクリプト
+├── gradlew.bat                           # Windows用Gradleラッパー
+└── local.properties                      # SDKのパス情報
+```
