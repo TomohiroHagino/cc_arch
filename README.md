@@ -111,9 +111,9 @@ app/
     │    └── users/
     │          └── index.html.erb
     ├── presenters/                  # プレゼンター
-    │    └── user_presenter.rb       # ユーザー表示フォーマット
+    │    └── user_presenter.rb       # （ビューのための）ユーザー表示フォーマット
     │
-    └── serializers/
+    └── serializers/  # API レスポンスフォーマット
 ```
 
 ```
