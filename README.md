@@ -81,21 +81,22 @@ app/
 │   │    │    └── active_record_user_command_repository.rb  # 書き込み系
 │   │    └── queries/
 │   │         └── active_record_user_query_repository.rb 　# 読み取り系
-│   ├── services/  # サービス層 (汎用的な処理)
-│   │    ├── api/
-│   │    │    ├── email_service.rb       # （API用）メール送信サービス
-│   │    │    └── ....
-│   │    ├── wapi/
-│   │    │    ├── email_service.rb       # （Web用）メール送信サービス
-│   │    │    └── ....
-│   │    ├── admin/
-│   │    │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
-│   │    │    └── ....
-│   │    └── common
-│   │        　├── email_service.rb         # メール送信サービス
-│   │        　└── notification_service.rb  # 通知サービス
 │   └── external_apis/           # 外部APIとの連携
 │       └── payment_gateway_api.rb
+│
+├── services/  # アプリケーションサービス層 (汎用的な処理)
+│   ├── api/
+│   │    ├── email_service.rb       # （API用）メール送信サービス
+│   │    └── ....
+│   ├── wapi/
+│   │    ├── email_service.rb       # （Web用）メール送信サービス
+│   │    └── ....
+│   ├── admin/
+│   │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
+│   │    └── ....
+│   └── common
+│       　├── email_service.rb         # メール送信サービス
+│       　└── notification_service.rb  # 通知サービス
 │
 └── interfaces/                 # インターフェースアダプタ層
     ├── controllers/            # インターフェース (コントローラ)
