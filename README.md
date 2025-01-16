@@ -11,7 +11,7 @@ https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
 ```
 app/
 │
-├── 01_domain/ # ドメイン層
+├── 01_domain/                  # ドメイン層
 │   ├── aggregates/             # アグリゲートを管理するフォルダ
 │   │   ├── shopping_cart/      # ショッピングカートアグリゲート
 │   │   │   ├── shopping_cart.rb       # アグリゲートルート
@@ -29,7 +29,7 @@ app/
 │   │   │       └── queries/
 │   │   │           └── shopping_cart_query_repository.rb
 │   │   │
-│   │   ├── order/              # 注文アグリゲート
+│   │   ├── order/                      # 注文アグリゲート
 │   │   │   ├── order.rb                # アグリゲートルート
 │   │   │   ├── entities/               # エンティティを格納
 │   │   │   │   ├── order_item.rb          # 注文アイテムエンティティ
@@ -47,7 +47,7 @@ app/
 │   │   │       └── queries/
 │   │   │           └── order_query_repository.rb
 │   │   │
-│   │   └── user/               # ユーザーアグリゲート
+│   │   └── user/                       # ユーザーアグリゲート
 │   │       ├── user.rb                 # アグリゲートルート
 │   │       ├── entities/               # エンティティを格納
 │   │       │   ├── user_profile.rb        # ユーザープロファイルエンティティ
