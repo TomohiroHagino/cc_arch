@@ -85,32 +85,33 @@ app/
 │            ├── ban_user_mobile.rb            # ユースケース: ユーザー更新（垢BAN
 │            └── withdraw_user_mobile.rb       # ユースケース: ユーザー退会
 │
-├── 03_services/  # アプリケーションサービス層 (汎用的な処理)
-│   ├── api/
-│   │    ├── email_service.rb       # （API用）メール送信サービス
-│   │    └── ....
-│   ├── wapi/
-│   │    ├── email_service.rb       # （Web用）メール送信サービス
-│   │    └── ....
-│   ├── admin/
-│   │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
-│   │    └── ....
-│   └── common
-│       　├── email_service.rb         # メール送信サービス
-│       　└── notification_service.rb  # 通知サービス
-│
-├── 04_infrastructure/           # インフラストラクチャー層
+├── 03_infrastructure/           # インフラストラクチャー層
 │   ├── repositories/            # リポジトリ実装
 │   │    ├── commands/
 │   │    │    └── active_record_user_command_repository.rb  # 書き込み系
 │   │    └── queries/
 │   │         └── active_record_user_query_repository.rb 　# 読み取り系
+│   │
+│   ├── services/  # アプリケーションサービス層 (汎用的な処理)
+│   │   ├── api/
+│   │   │    ├── email_service.rb       # （API用）メール送信サービス
+│   │   │    └── ....
+│   │   ├── wapi/
+│   │   │    ├── email_service.rb       # （Web用）メール送信サービス
+│   │   │    └── ....
+│   │   ├── admin/
+│   │   │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
+│   │   │    └── ....
+│   │   └── common
+│   │       　├── email_service.rb         # メール送信サービス
+│   │       　└── notification_service.rb  # 通知サービス
+│   │
 │   ├── models/                 # ActiveRecordに紐づいてるモデル。アソシエーションだけ定義する。
 │   │                           #     バリデーションはドメイン層のエンティティと値オブジェクトで。
 │   └── external_apis/          # 外部APIとの連携
 │       └── payment_gateway_api.rb
 │
-└── 05_interfaces/              # インターフェースアダプタ層
+└── 04_interfaces/              # インターフェースアダプタ層
     ├── controllers/            # インターフェース (コントローラ)
     │     ├── api/
     │     │    └── v1/
@@ -206,23 +207,24 @@ spec/
 │            ├── ban_user_mobile_spec.rb            # ユースケース: ユーザー更新（垢BAN）のテスト
 │            └── withdraw_user_mobile_spec.rb       # ユースケース: ユーザー退会のテスト
 │
-├── 03_services/  # アプリケーションサービス層 (汎用的な処理)
-│   ├── wapi/
-│   │    ├── email_service.rb       # （Web用）メール送信サービスのテスト
-│   │    └── ....
-│   ├── admin/
-│   │    ├── email_service.rb         # （管理者が使用するための）メール送信サービスのテスト
-│   │    └── ....
-│   └── common
-│       　├── email_service.rb         # メール送信サービスのテスト
-│       　└── notification_service.rb  # 通知サービスのテスト
-│
 ├── 04_infrastructure/           # インフラストラクチャー層
 │   ├── repositories/            # リポジトリ実装のテスト
 │   │    ├── commands/
 │   │    │    └── active_record_user_command_repository_spec.rb  # 書き込み系リポジトリのテスト
 │   │    └── queries/
 │   │         └── active_record_user_query_repository_spec.rb 　# 読み取り系リポジトリのテスト
+│   │
+│   ├── services/  # アプリケーションサービス層 (汎用的な処理)
+│   │   ├── wapi/
+│   │   │    ├── email_service.rb       # （Web用）メール送信サービスのテスト
+│   │   │    └── ....
+│   │   ├── admin/
+│   │   │    ├── email_service.rb         # （管理者が使用するための）メール送信サービスのテスト
+│   │   │    └── ....
+│   │   └── common
+│   │       　├── email_service.rb         # メール送信サービスのテスト
+│   │       　└── notification_service.rb  # 通知サービスのテスト
+│   │
 │   └── external_apis/           # 外部APIとの連携のテスト
 │       └── payment_gateway_api_spec.rb
 │
