@@ -20,7 +20,7 @@ app/
 │   │   │   │   └── discount.rb        # 割引情報のエンティティ（例）
 │   │   │   ├── value_objects/           # 値オブジェクトを格納
 │   │   │   │   ├── product_id.rb        # 商品ID（値オブジェクト）
-│   │   │   │   └── money.rb             # 金額（値オブジェクト）
+│   │   │   │   └── shopping_cart_money.rb             # ショッピングカート固有のロジックを持った金額（値オブジェクト）
 │   │   │   ├── services/               # ドメインサービス
 │   │   │   │   └── calculate_cart_total_service.rb  # カート合計金額計算
 │   │   │   └── repositories/           # リポジトリ
@@ -36,8 +36,7 @@ app/
 │   │   │   │   ├── shipping_detail.rb     # 配送情報エンティティ
 │   │   │   │   └── payment_detail.rb      # 支払い情報エンティティ
 │   │   │   ├── value_objects/          # 値オブジェクトを格納
-│   │   │   │   ├── money.rb               # 金額（値オブジェクト）
-│   │   │   │   ├── address.rb             # 住所（値オブジェクト）
+│   │   │   │   ├── order_address.rb             # order固有のロジックを持った住所（値オブジェクト）
 │   │   │   │   └── tax_rate.rb            # 税率（値オブジェクト）
 │   │   │   ├── services/               # ドメインサービス
 │   │   │   │   └── calculate_order_total_service.rb # 注文合計金額計算
@@ -53,9 +52,9 @@ app/
 │   │       │   ├── user_profile.rb        # ユーザープロファイルエンティティ
 │   │       │   └── user_preferences.rb    # ユーザー設定エンティティ
 │   │       ├── value_objects/          # 値オブジェクトを格納
-│   │       │   ├── email.rb              # メール（値オブジェクト）
+│   │       │   ├── user_email.rb              # ユーザー固有のロジックを持ったメール（値オブジェクト）
 │   │       │   ├── password.rb           # パスワード（値オブジェクト）
-│   │       │   └── address.rb            # 住所（値オブジェクト）
+│   │       │   └── user_address.rb            # ユーザー固有のロジックを持った住所（値オブジェクト）
 │   │       ├── services/               # ドメインサービス
 │   │       │   └── password_encryption_service.rb  # パスワード暗号化
 │   │       └── repositories/           # リポジトリ
@@ -66,9 +65,7 @@ app/
 │   │
 │   └── shared/                 # ドメイン全体で共有される値オブジェクトやサービス
 │       ├── value_objects/
-│       │   ├── money.rb        # 共有の金額値オブジェクト
-│       │   ├── address.rb      # 共有の住所値オブジェクト
-│       │   └── email.rb        # 共有のメール値オブジェクト
+│       │   └── address.rb      # 共有の住所値オブジェクト
 │       └── services/
 │           └── tax_calculator_service.rb  # 税金計算
 │           ├── shipping_cost_service.rb       # 配送料計算
@@ -141,11 +138,11 @@ spec/
 │   │   ├── shopping_cart/   # ショッピングカートアグリゲートのテスト
 │   │   │   ├── shopping_cart_spec.rb  # ショッピングカートアグリゲートのテスト
 │   │   │   ├── entities/           # エンティティのテスト
-│   │   │   │   ├── shopping_cart_item_spec.rb  # ショッピングカートアイテムエンティティのテスト
-│   │   │   │   └── discount_spec.rb            # 割引情報エンティティのテスト
-│   │   │   ├── value_objects/          # 値オブジェクトのテスト
-│   │   │   │   ├── product_id_spec.rb          # 商品ID（値オブジェクト）のテスト
-│   │   │   │   └── money_spec.rb               # 金額（値オブジェクト）のテスト
+│   │   │   │   ├── shopping_cart_item_spec.rb    # ショッピングカートアイテムエンティティのテスト
+│   │   │   │   └── discount_spec.rb              # 割引情報エンティティのテスト
+│   │   │   ├── value_objects/                    # 値オブジェクトのテスト
+│   │   │   │   ├── product_id_spec.rb            # 商品ID（値オブジェクト）のテスト
+│   │   │   │   └── shopping_cart_money_spec.rb   # 金額（値オブジェクト）のテスト
 │   │   │   ├── services/               # ドメインサービスのテスト
 │   │   │   │   └── calculate_cart_total_service_spec.rb  # カート合計金額計算サービスのテスト
 │   │   │   └── repositories/           # リポジトリのテスト
@@ -160,8 +157,8 @@ spec/
 │   │   │   │   ├── shipping_detail_spec.rb     # 配送情報エンティティのテスト
 │   │   │   │   └── payment_detail_spec.rb      # 支払い情報エンティティのテスト
 │   │   │   ├── value_objects/          # 値オブジェクトのテスト
-│   │   │   │   ├── money_spec.rb               # 金額（値オブジェクト）のテスト
-│   │   │   │   ├── address_spec.rb             # 住所（値オブジェクト）のテスト
+│   │   │   │   ├── order_money_spec.rb               # 金額（値オブジェクト）のテスト
+│   │   │   │   ├── order_address_spec.rb             # 住所（値オブジェクト）のテスト
 │   │   │   │   └── tax_rate_spec.rb            # 税率（値オブジェクト）のテスト
 │   │   │   ├── services/               # ドメインサービスのテスト
 │   │   │   │   └── calculate_order_total_service_spec.rb # 注文合計金額計算サービスのテスト
@@ -176,9 +173,9 @@ spec/
 │   │       │   ├── user_profile_spec.rb        # ユーザープロファイルエンティティのテスト
 │   │       │   └── user_preferences_spec.rb    # ユーザー設定エンティティのテスト
 │   │       ├── value_objects/          # 値オブジェクトのテスト
-│   │       │   ├── email_spec.rb              # メール（値オブジェクト）のテスト
+│   │       │   ├── user_email_spec.rb              # メール（値オブジェクト）のテスト
 │   │       │   ├── password_spec.rb           # パスワード（値オブジェクト）のテスト
-│   │       │   └── address_spec.rb            # 住所（値オブジェクト）のテスト
+│   │       │   └── user_address_spec.rb            # 住所（値オブジェクト）のテスト
 │   │       ├── services/               # ドメインサービスのテスト
 │   │       │   └── password_encryption_service_spec.rb  # パスワード暗号化サービスのテスト
 │   │       └── repositories/           # リポジトリのテスト
@@ -189,7 +186,7 @@ spec/
 │   └── shared/                 # ドメイン全体で共有される値オブジェクトやサービス
 │       ├── value_objects/
 │       │   ├── money_spec.rb        # 共有の金額値オブジェクトのテスト
-│       │   ├── address_spec.rb      # 共有の住所値オブジェクトのテスト
+│       │   └── address_spec.rb      # 共有の住所値オブジェクトのテスト
 │       │   └── email_spec.rb        # 共有のメール値オブジェクトのテスト
 │       └── services/
 │           └── tax_calculator_service_spec.rb  # 税金計算サービスのテスト
