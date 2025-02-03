@@ -858,46 +858,46 @@ flutter_project/
 │   │   ├── api_clients/
 │   │   ├── external/
 │   │   └── storage/
-│   ├── 04_presentation/        # 04_interface: UI、ページ、ウィジェット
-│   │   ├── components/
-│   │   │   ├── investment_property_card.dart
-│   │   │   ├── investment_property_card_list.dart
-│   │   ├── pages/              # Next.js の `app/`
-│   │   │   ├── about/
-│   │   │   │   ├── about_page.dart
-│   │   │   │   ├── about_layout.dart
-│   │   │   │   └── about_view_model.dart
-│   │   │   ├── admin/
-│   │   │   │   ├── admin_page.dart
-│   │   │   │   ├── admin_layout.dart
-│   │   │   │   └── admin_view_model.dart
-│   │   │   ├── contact/
-│   │   │   │   ├── contact_page.dart
-│   │   │   │   ├── contact_layout.dart
-│   │   │   │   └── contact_view_model.dart
-│   │   │   ├── faq/
-│   │   │   ├── invest_properties/
-│   │   │   │   ├── invest_property_detail_page.dart
-│   │   │   │   ├── invest_property_detail_view_model.dart
-│   │   │   │   └── invest_property_detail_layout.dart
-│   │   │   ├── local_support/
-│   │   │   ├── market/
-│   │   │   ├── rent_properties/
-│   │   │   │   ├── rent_property_detail_page.dart
-│   │   │   │   ├── rent_property_detail_view_model.dart
-│   │   │   │   └── rent_property_detail_layout.dart
-│   │   │   ├── search/
-│   │   │   ├── user/
-│   │   ├── shared_components/
-│   │   │   ├── client/
-│   │   │   │   └── client_google_map.dart
-│   │   │   └── server/
-│   │   ├── styles/
-│   │   │   └── global_styles.dart
-│   │   └── types/
-│   │       ├── ui_component_types.dart
-│   │       └── forms/
-│   │           └── form_input_types.dart
+│   └── 04_presentation/        # 04_interface: UI、ページ、ウィジェット
+│       ├── components/
+│       │   ├── investment_property_card.dart
+│       │   ├── investment_property_card_list.dart
+│       ├── pages/              # Next.js の `app/` や、Railsのコントローラーの階層とそっくりにする
+│       │   ├── about/
+│       │   │   ├── about_page.dart
+│       │   │   ├── about_layout.dart
+│       │   │   └── about_view_model.dart
+│       │   ├── admin/
+│       │   │   ├── admin_page.dart
+│       │   │   ├── admin_layout.dart
+│       │   │   └── admin_view_model.dart
+│       │   ├── contact/
+│       │   │   ├── contact_page.dart
+│       │   │   ├── contact_layout.dart
+│       │   │   └── contact_view_model.dart
+│       │   ├── faq/
+│       │   ├── invest_properties/
+│       │   │   ├── invest_property_detail_page.dart
+│       │   │   ├── invest_property_detail_view_model.dart
+│       │   │   └── invest_property_detail_layout.dart
+│       │   ├── local_support/
+│       │   ├── market/
+│       │   ├── rent_properties/
+│       │   │   ├── rent_property_detail_page.dart
+│       │   │   ├── rent_property_detail_view_model.dart
+│       │   │   └── rent_property_detail_layout.dart
+│       │   ├── search/
+│       │   └── user/
+│       ├── shared_components/
+│       │   ├── client/
+│       │   │   └── client_google_map.dart
+│       │   └── server/
+│       ├── styles/
+│       │   └── global_styles.dart
+│       └── types/
+│           ├── ui_component_types.dart
+│           └── forms/
+│               └── form_input_types.dart
 ├── test/                    # テストディレクトリ
 ├── pubspec.yaml             # Flutterのパッケージ管理ファイル
 ├── analysis_options.yaml     # Linterの設定
