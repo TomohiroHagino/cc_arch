@@ -2,9 +2,10 @@
 https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
 こちらの記事で勉強させていただきました
 
- ただのメモ書きですが、プロジェクトの雛形として重宝してます。
+ ただのメモ書きですが、プロジェクトの最初の雛形として使ってます。
 
- フォルダの構造を統一させることで、言語を選ばず、チームメンバーが迷わない様にしたい。
+ フォルダの構造を統一させることで、言語を選ばず、チームメンバーが迷わない様に。
+ いらない層はあとで消してしまう。
 
 
 # Ruby on Rails
@@ -851,6 +852,7 @@ flutter_project/
 │   │   └── value_objects/
 │   ├── 02_application/         # 02_application: ユースケース、状態管理、hooksのような概念
 │   │   ├── hooks/
+│   │   ├── providers/
 │   │   ├── state/
 │   │   └── types/
 │   │       └── auth_user_types.dart
