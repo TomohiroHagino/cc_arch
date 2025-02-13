@@ -75,17 +75,16 @@ app/
 │           └── calculate_tax_service.rb       # 税金計算
 │
 ├── 02_use_cases/ # アプリケーション層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
-│   └── users/
-│       ├── web/
-│       │    ├── register_user_web.rb          # ユースケース: ユーザー登録
-│       │    ├── ban_user_web.rb               # ユースケース: ユーザー更新（垢BAN
-│       │    └── withdraw_user_web.rb          # ユースケース: ユーザー退会
-│       └── mobile/
-│            ├── register_user_mobile.rb       # ユースケース: ユーザー登録
-│            ├── ban_user_mobile.rb            # ユースケース: ユーザー更新（垢BAN
-│            └── withdraw_user_mobile.rb       # ユースケース: ユーザー退会
+│   ├── web/
+│   │    ├── register_user_web.rb          # ユースケース: ユーザー登録
+│   │    ├── ban_user_web.rb               # ユースケース: ユーザー更新（垢BAN
+│   │    └── withdraw_user_web.rb          # ユースケース: ユーザー退会
+│   └── mobile/
+│        ├── register_user_mobile.rb       # ユースケース: ユーザー登録
+│        ├── ban_user_mobile.rb            # ユースケース: ユーザー更新（垢BAN
+│        └── withdraw_user_mobile.rb       # ユースケース: ユーザー退会
 │
-├── 03_services/  # アプリケーションサービス層 (汎用的な処理)
+├── 03_services/  # アプリケーションサービス層 (汎用サービス処理)
 │   ├── api/
 │   │    ├── email_service.rb       # （API用）メール送信サービス
 │   │    └── ....
@@ -197,7 +196,6 @@ spec/
 │           └── calculate_tax_service_spec.rb       # 税金計算サービスのテスト
 │
 ├── 02_use_cases/ # アプリケーション層
-│   └── users/
 │       ├── web/
 │       │    ├── register_user_web_spec.rb          # ユースケース: ユーザー登録のテスト
 │       │    ├── ban_user_web_spec.rb               # ユースケース: ユーザー更新（垢BAN）のテスト
@@ -207,6 +205,20 @@ spec/
 │            ├── ban_user_mobile_spec.rb            # ユースケース: ユーザー更新（垢BAN）のテスト
 │            └── withdraw_user_mobile_spec.rb       # ユースケース: ユーザー退会のテスト
 │
+├── 03_services/  # アプリケーションサービス層 (汎用サービス処理)
+│   ├── api/
+│   │    ├── email_service_spec.rb       # （API用）メール送信サービス
+│   │    └── ....
+│   ├── wapi/
+│   │    ├── email_service_spec.rb       # （Web用）メール送信サービス
+│   │    └── ....
+│   ├── admin/
+│   │    ├── email_service_spec.rb         # （管理者が使用するための）メール送信サービス
+│   │    └── ....
+│   └── common
+│           　├── email_service_spec.rb         # メール送信サービス
+│           　└── notification_service_spec.rb  # 通知サービス
+│
 ├── 04_infrastructure/           # インフラストラクチャー層
 │   ├── repositories/            # リポジトリ実装のテスト
 │   │    ├── commands/
@@ -214,7 +226,7 @@ spec/
 │   │    └── queries/
 │   │         └── active_record_user_query_repository_spec.rb 　# 読み取り系リポジトリのテスト
 │   │
-│   ├── services/  # アプリケーションサービス層 (汎用的な処理)
+│   ├── services/  # アプリケーションサービス層 (汎用的な処理) ※ 03_servicesに置くか、ここに置くかで迷ってる
 │   │   ├── wapi/
 │   │   │    ├── email_service.rb       # （Web用）メール送信サービスのテスト
 │   │   │    └── ....
@@ -254,15 +266,14 @@ spec/
 app/
 ├── 01_domain/               # ドメイン層
 │   ├── aggregates/
+│   ├── entities/
 │   ├── services/
 │   └── value_objects/
 │
-├── 02_use_cases/            # アプリケーション層
-│   ├── users/
-│   ├── orders/
-│   └── payments/
+├── 02_use_cases/            # アプリケーション層(複数エンティティにまたがる処理)
+│   └── ...
 │
-├── 03_services/             # アプリケーションサービス層
+├── 03_services/             # アプリケーションサービス層（汎用サービス）
 │   ├── api/
 │   ├── wapi/
 │   ├── admin/
@@ -426,7 +437,9 @@ project/
 └── manage.py
 ```
 
-### Next.js（App Routerで。基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かも）
+### Next.js
+（App Routerで。基本バックエンドからapiで情報を受け取るのでドメイン層は必要最低限。 openapi使うともっと楽かも）
+（今の所、妄想。実際はインターフェース層ばっかりぶ厚くなるし、Apiから値を受け取るだけで済んでる。）
 ```
 src/
 ├── 01_domain/                         # ドメイン層
@@ -440,7 +453,7 @@ src/
 │       ├── UserTypes.ts               # ユーザー型
 │       └── ProductTypes.ts            # 商品型
 │
-├── 02_application/                       # アプリケーション層（ユースケースや状態管理）
+├── 02_application/                    # アプリケーション層（ユースケースや状態管理）
 │   ├── hooks/                         # カスタムフック
 │   │   ├── useFetchUsers.ts           # ユーザー取得
 │   │   ├── useFetchProducts.ts        # 商品取得
@@ -472,7 +485,7 @@ src/
 │       └── firebaseClient.ts          # Firebase設定
 │
 ├── 04_interface/                      # インターフェース層
-│   ├── app/                           # App Routerディレクトリ
+│   ├── app/                           # App Routerディレクトリ（appディレクトリだけルートに移したほうがわかりやすいかもしれない。）
 │   │   ├── layout.tsx                 # 共通レイアウト
 │   │   ├── page.tsx                   # ホームページ
 │   │   ├── users/                     # ユーザーページ
@@ -587,7 +600,7 @@ src/
 │   │   │   └── UserCard.tsx           # ユーザーカード
 │   │   └── products/                  # 商品関連コンポーネント
 │   │       └── ProductList.tsx        # 商品一覧
-│   ├── pages/                         # ページコンポーネント
+│   ├── pages/                         # ページコンポーネント（pagesのところだけ、ルートディレクトリにもっていったほうがわかりやすいかも。）
 │   │   ├── HomePage.tsx               # ホームページ
 │   │   ├── UsersPage.tsx              # ユーザーページ
 │   │   └── ProductsPage.tsx           # 商品ページ
