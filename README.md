@@ -86,7 +86,7 @@ app/
 │           ├── ban_user.rb
 │           └── withdraw_user.rb
 │
-├── 03_services/                            # 横断（文脈で分けない）
+├── 03_services/      #（汎用処理。メール・通知等）横断（文脈で分けない）
 │   ├── api/
 │   │   └── email_service.rb
 │   ├── wapi/
