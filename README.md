@@ -12,399 +12,197 @@ https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
 # Ruby on Rails
 
 ```
-app/
-│
-├── 01_domain/                  # ドメイン層
-│   ├── aggregates/             # アグリゲートを管理するフォルダ
-│   │   ├── shopping_cart/      # ショッピングカートアグリゲート
-│   │   │   ├── shopping_cart.rb       # アグリゲートルート
-│   │   │   ├── entities/              # エンティティを格納
-│   │   │   │   ├── item.rb            # ショッピングカートアイテムエンティティ
-│   │   │   │   └── discount.rb        # 割引情報のエンティティ（例）
-│   │   │   ├── value_objects/           # 値オブジェクトを格納
-│   │   │   │   ├── product_id.rb        # 商品ID（値オブジェクト）
-│   │   │   │   └── shopping_cart_money.rb             # ショッピングカート固有のロジックを持った金額（値オブジェクト）
-│   │   │   ├── services/               # ドメインサービス
-│   │   │   │   └── calculate_cart_total_service.rb  # カート合計金額計算
-│   │   │   └── repositories/           # リポジトリ
-│   │   │       ├── commands/
-│   │   │       │   └── shopping_cart_command_repository.rb
-│   │   │       └── queries/
-│   │   │           └── shopping_cart_query_repository.rb
-│   │   │
-│   │   ├── order/                      # 注文アグリゲート
-│   │   │   ├── order.rb                # アグリゲートルート
-│   │   │   ├── entities/               # エンティティを格納
-│   │   │   │   ├── order_item.rb          # 注文アイテムエンティティ
-│   │   │   │   ├── shipping_detail.rb     # 配送情報エンティティ
-│   │   │   │   └── payment_detail.rb      # 支払い情報エンティティ
-│   │   │   ├── value_objects/          # 値オブジェクトを格納
-│   │   │   │   ├── order_address.rb             # order固有のロジックを持った住所（値オブジェクト）
-│   │   │   │   └── tax_rate.rb            # 税率（値オブジェクト）
-│   │   │   ├── services/               # ドメインサービス
-│   │   │   │   └── calculate_order_total_service.rb # 注文合計金額計算
-│   │   │   └── repositories/           # リポジトリ（アグリゲートごとにコマンド、クエリフォルダを作ってもいいかもしれない）
-│   │   │       ├── commands/
-│   │   │       │   └── order_command_repository.rb
-│   │   │       └── queries/
-│   │   │           └── order_query_repository.rb
-│   │   │
-│   │   └── user/                       # ユーザーアグリゲート
-│   │       ├── user.rb                 # アグリゲートルート
-│   │       ├── entities/               # エンティティを格納
-│   │       │   ├── user_profile.rb        # ユーザープロファイルエンティティ
-│   │       │   └── user_preferences.rb    # ユーザー設定エンティティ
-│   │       ├── value_objects/          # 値オブジェクトを格納
-│   │       │   ├── user_email.rb              # ユーザー固有のロジックを持ったメール（値オブジェクト）
-│   │       │   ├── password.rb           # パスワード（値オブジェクト）
-│   │       │   └── user_address.rb            # ユーザー固有のロジックを持った住所（値オブジェクト）
-│   │       ├── services/               # ドメインサービス
-│   │       │   └── password_encryption_service.rb  # パスワード暗号化
-│   │       └── repositories/           # リポジトリ
-│   │           ├── commands/
-│   │           │   └── user_command_repository.rb
-│   │           └── queries/
-│   │               └── user_query_repository.rb
-│   │
-│   └── shared/                 # ドメイン全体で共有される値オブジェクトやサービス
-│       ├── value_objects/
-│       │   └── address.rb      # 共有の住所値オブジェクト
-│       └── services/
-│           └── tax_calculator_service.rb  # 税金計算
-│           ├── shipping_cost_service.rb       # 配送料計算
-│           └── calculate_tax_service.rb       # 税金計算
-│
-├── 02_use_cases/ # アプリケーション層(各ユースケースがリポジトリやサービスを組み合わせ、単一のビジネスフロー全体を管理する)
-│   ├── web/
-│   │    ├── register_user_web.rb          # ユースケース: ユーザー登録
-│   │    ├── ban_user_web.rb               # ユースケース: ユーザー更新（垢BAN
-│   │    └── withdraw_user_web.rb          # ユースケース: ユーザー退会
-│   └── mobile/
-│        ├── register_user_mobile.rb       # ユースケース: ユーザー登録
-│        ├── ban_user_mobile.rb            # ユースケース: ユーザー更新（垢BAN
-│        └── withdraw_user_mobile.rb       # ユースケース: ユーザー退会
-│
-├── 03_services/  # アプリケーションサービス層 (汎用サービス処理)
-│   ├── api/
-│   │    ├── email_service.rb       # （API用）メール送信サービス
-│   │    └── ....
-│   ├── wapi/
-│   │    ├── email_service.rb       # （Web用）メール送信サービス
-│   │    └── ....
-│   ├── admin/
-│   │    ├── email_service.rb         # （管理者が使用するための）メール送信サービス
-│   │    └── ....
-│   └── common
-│            ├── email_service.rb         # メール送信サービス
-│            └── notification_service.rb  # 通知サービス
-│    
-├── 04_infrastructure/           # インフラストラクチャー層
-│   ├── repositories/            # リポジトリ実装
-│   │    ├── commands/
-│   │    │    └── active_record_user_command_repository.rb  # 書き込み系
-│   │    └── queries/
-│   │         └── active_record_user_query_repository.rb  # 読み取り系
-│   │
-│   ├── models/                 # ActiveRecordに紐づいてるモデル。アソシエーションだけ定義する。
-│   │                           #     バリデーションはドメイン層のエンティティと値オブジェクトで。
-│   └── external_apis/          # 外部APIとの連携
-│       └── payment_gateway_api.rb
-│
-└── 05_interfaces/              # インターフェースアダプタ層
-    ├── controllers/            # インターフェース (コントローラ)
-    │     ├── api/
-    │     │    └── v1/
-    │     │        └── users_controller.rb
-    │     ├── wapi/
-    │     │    └── v1/
-    │     │        └── users_controller.rb
-    │     └── admin/
-    │          └── users_controller.rb
-    │
-    ├── assets/
-    ├── javascripts/
-    │
-    ├── views/                  # インターフェース(ビュー)
-    │    └── users/
-    │          └── index.html.erb
-    ├── presenters/                  # プレゼンター
-    │    └── user_presenter.rb       # （ビューのための）ユーザー表示フォーマット
-    │
-    └── serializers/  # API レスポンスフォーマット
+  app/
+  ├── 01_domain/
+  │   ├── sales/                              # ★文脈の棚（層は増えない・ただの仕切り）
+  │   │   └── aggregates/
+  │   │       ├── shopping_cart/ { shopping_cart.rb, entities/, value_objects/, services/,
+  repositories/{commands,queries} }
+  │   │       └── order/         { order.rb, entities/, value_objects/, services/,
+  repositories/{commands,queries} }
+  │   ├── identity/                           # ★文脈の棚
+  │   │   └── aggregates/
+  │   │       └── user/          { user.rb, entities/, value_objects/, services/,
+  repositories/{commands,queries} }
+  │   └── shared/                             # 文脈をまたぐ共有（そのまま・動かさない）
+  │       ├── value_objects/ { address.rb }
+  │       └── services/      { tax_calculator_service.rb, shipping_cost_service.rb }
+  │
+  ├── 02_use_cases/
+  │   ├── sales/                              # 販売の業務フロー（例：place_order）
+  │   │   └── { place_order.rb, confirm_order.rb }
+  │   └── identity/                           # ユーザー関連は全部ここ（今の
+  register/ban/withdraw）
+  │       ├── web/    { register_user.rb, ban_user.rb, withdraw_user.rb }
+  │       └── mobile/ { register_user.rb, ban_user.rb, withdraw_user.rb }
+  │
+  ├── 03_services/                            # ← 横断。文脈で分けない（そのまま！）
+  │   ├── api/  wapi/  admin/  common/  { email_service.rb, notification_service.rb }
+  │
+  ├── 04_infrastructure/
+  │   ├── sales/                              # ★インフラも文脈ごと（repo実装＋ARモデル）
+  │   │   ├── repositories/ { commands/active_record_order_command_repository.rb,
+  queries/... }
+  │   │   └── models/        { order.rb, order_item.rb, cart.rb }   # アソシエーションだけ
+  │   ├── identity/
+  │   │   ├── repositories/ { commands/active_record_user_command_repository.rb, queries/...
+  }
+  │   │   └── models/        { user.rb }
+  │   └── external_apis/                      # ← 横断。文脈で分けない（そのまま！）
+  │       └── payment_gateway_api.rb
+  │
+  └── 05_interfaces/                          # ← Web/APIの出入口。横断（そのまま！）
+      ├── controllers/
+      │   ├── api/v1/
+      │   │   └── users_controller.rb
+      │   ├── wapi/v1/
+      │   │   └── users_controller.rb
+      │   └── admin/
+      │       └── users_controller.rb
+      ├── views/
+      │   └── users/
+      │       └── index.html.erb
+      ├── presenters/
+      │   └── user_presenter.rb
+      ├── serializers/
+      │   └── user_serializer.rb
+      ├── assets/
+      └── javascripts/
 ```
 
 ```
-❯ spec/
-  ├── 01_domain/               # ドメイン層
-  │   ├── aggregates/          # アグリゲート
-  │   │   ├── shopping_cart/   # ショッピングカートアグリゲートのテスト
-  │   │   │   ├── shopping_cart_spec.rb  # ショッピングカートアグリゲートのテスト
-  │   │   │   ├── entities/           # エンティティのテスト
-  │   │   │   │   ├── shopping_cart_item_spec.rb    #
-  ショッピングカートアイテムエンティティのテスト
-  │   │   │   │   └── discount_spec.rb              # 割引情報エンティティのテスト
-  │   │   │   ├── value_objects/                    # 値オブジェクトのテスト
-  │   │   │   │   ├── product_id_spec.rb            # 商品ID（値オブジェクト）のテスト
-  │   │   │   │   └── shopping_cart_money_spec.rb   # 金額（値オブジェクト）のテスト
-  │   │   │   ├── services/               # ドメインサービスのテスト
-  │   │   │   │   └── calculate_cart_total_service_spec.rb  #
-  カート合計金額計算サービスのテスト
-  │   │   │   └── repositories/           # リポジトリのテスト
-  │   │   │       ├── commands/
-  │   │   │       │   └── shopping_cart_command_repository_spec.rb
-  │   │   │       └── queries/
-  │   │   │           └── shopping_cart_query_repository_spec.rb
-  │   │   ├── order/              # 注文アグリゲート
-  │   │   │   ├── order_spec.rb                # 注文アグリゲートのテスト
-  │   │   │   ├── entities/               # エンティティのテスト
-  │   │   │   │   ├── order_item_spec.rb          # 注文アイテムエンティティのテスト
-  │   │   │   │   ├── shipping_detail_spec.rb     # 配送情報エンティティのテスト
-  │   │   │   │   └── payment_detail_spec.rb      # 支払い情報エンティティのテスト
-  │   │   │   ├── value_objects/          # 値オブジェクトのテスト
-  │   │   │   │   ├── order_money_spec.rb               # 金額（値オブジェクト）のテスト
-  │   │   │   │   ├── order_address_spec.rb             # 住所（値オブジェクト）のテスト
-  │   │   │   │   └── tax_rate_spec.rb            # 税率（値オブジェクト）のテスト
-  │   │   │   ├── services/               # ドメインサービスのテスト
-  │   │   │   │   └── calculate_order_total_service_spec.rb #
-  注文合計金額計算サービスのテスト
-  │   │   │   └── repositories/           # リポジトリのテスト
-  │   │   │       ├── commands/
-  │   │   │       │   └── order_command_repository_spec.rb
-  │   │   │       └── queries/
-  │   │   │           └── order_query_repository_spec.rb
-  │   │   └── user/               # ユーザーアグリゲート
-  │   │       ├── user_spec.rb                 # ユーザーアグリゲートのテスト
-  │   │       ├── entities/               # エンティティのテスト
-  │   │       │   ├── user_profile_spec.rb        #
-  ユーザープロファイルエンティティのテスト
-  │   │       │   └── user_preferences_spec.rb    # ユーザー設定エンティティのテスト
-  │   │       ├── value_objects/          # 値オブジェクトのテスト
-  │   │       │   ├── user_email_spec.rb              # メール（値オブジェクト）のテスト
-  │   │       │   ├── password_spec.rb           # パスワード（値オブジェクト）のテスト
-  │   │       │   └── user_address_spec.rb            # 住所（値オブジェクト）のテスト
-  │   │       ├── services/               # ドメインサービスのテスト
-  │   │       │   └── password_encryption_service_spec.rb  #
-  パスワード暗号化サービスのテスト
-  │   │       └── repositories/           # リポジトリのテスト
-  │   │           ├── commands/
-  │   │           │   └── user_command_repository_spec.rb
-  │   │           └── queries/
-  │   │               └── user_query_repository_spec.rb
-  │   └── shared/                 # ドメイン全体で共有される値オブジェクトやサービス
-  │       ├── value_objects/
-  │       │   ├── money_spec.rb        # 共有の金額値オブジェクトのテスト
-  │       │   └── address_spec.rb      # 共有の住所値オブジェクトのテスト
-  │       │   └── email_spec.rb        # 共有のメール値オブジェクトのテスト
-  │       └── services/
-  │           └── tax_calculator_service_spec.rb  # 税金計算サービスのテスト
-  │           ├── shipping_cost_service_spec.rb       # 配送料計算サービスのテスト
-  │           └── calculate_tax_service_spec.rb       # 税金計算サービスのテスト
+  spec/
+  ├── 01_domain/
+  │   ├── sales/                              # ★文脈の棚（app と同じ）
+  │   │   └── aggregates/
+  │   │       ├── shopping_cart/
+  │   │       │   ├── shopping_cart_spec.rb            # 純粋unit・DBなし
+  │   │       │   ├── entities/        { item_spec.rb, discount_spec.rb }
+  │   │       │   ├── value_objects/   { product_id_spec.rb, shopping_cart_money_spec.rb }
+  │   │       │   └── services/        { calculate_cart_total_service_spec.rb }
+  │   │       │       # ← repositories/ の spec は基本ナシ（理由は下）
+  │   │       └── order/
+  │   │           ├── order_spec.rb
+  │   │           ├── entities/        { order_item_spec.rb, shipping_detail_spec.rb,
+  payment_detail_spec.rb }
+  │   │           ├── value_objects/   { order_address_spec.rb, tax_rate_spec.rb }
+  │   │           └── services/        { calculate_order_total_service_spec.rb }
+  │   ├── identity/                           # ★文脈の棚
+  │   │   └── aggregates/
+  │   │       └── user/
+  │   │           ├── user_spec.rb
+  │   │           ├── entities/        { user_profile_spec.rb, user_preferences_spec.rb }
+  │   │           ├── value_objects/   { user_email_spec.rb, password_spec.rb,
+  user_address_spec.rb }
+  │   │           └── services/        { password_encryption_service_spec.rb }
+  │   └── shared/                             # 横断共有（文脈で分けない・そのまま）
+  │       ├── value_objects/  { money_spec.rb, address_spec.rb }
+  │       └── services/       { tax_calculator_service_spec.rb,
+  shipping_cost_service_spec.rb }
   │
-  ├── 02_use_cases/ # アプリケーション層
-  │       ├── web/
-  │       │    ├── register_user_web_spec.rb          # ユースケース: ユーザー登録のテスト
-  │       │    ├── ban_user_web_spec.rb               # ユースケース:
-  ユーザー更新（垢BAN）のテスト
-  │       │    └── withdraw_user_web_spec.rb          # ユースケース: ユーザー退会のテスト
-  │       └── mobile/
-  │            ├── register_user_mobile_spec.rb       # ユースケース: ユーザー登録のテスト
-  │            ├── ban_user_mobile_spec.rb            # ユースケース:
-  ユーザー更新（垢BAN）のテスト
-  │            └── withdraw_user_mobile_spec.rb       # ユースケース: ユーザー退会のテスト
+  ├── 02_use_cases/
+  │   ├── sales/                              # 販売の業務フロー
+  │   │   └── { place_order_spec.rb }
+  │   └── identity/                           # 今の register/ban/withdraw はここ
+  │       ├── web/    { register_user_spec.rb, ban_user_spec.rb, withdraw_user_spec.rb }
+  │       └── mobile/ { register_user_spec.rb, ban_user_spec.rb, withdraw_user_spec.rb }
   │
-  ├── 03_services/  # アプリケーションサービス層 (汎用サービス処理)
-  │   ├── api/
-  │   │    ├── email_service_spec.rb       # （API用）メール送信サービス
-  │   │    └── ....
-  │   ├── wapi/
-  │   │    ├── email_service_spec.rb       # （Web用）メール送信サービス
-  │   │    └── ....
-  │   ├── admin/
-  │   │    ├── email_service_spec.rb         # （管理者が使用するための）メール送信サービス
-  │   │    └── ....
-  │   └── common
-  │           　├── email_service_spec.rb         # メール送信サービス
-  │           　└── notification_service_spec.rb  # 通知サービス
+  ├── 03_services/                            # ← 横断。文脈で分けない（そのまま）
+  │   └── { api/, wapi/, admin/, common/ } 各 { email_service_spec.rb,
+  notification_service_spec.rb }
   │
-  ├── 04_infrastructure/           # インフラストラクチャー層
-  │   ├── repositories/            # リポジトリ実装のテスト
-  │   │    ├── commands/
-  │   │    │    └── active_record_user_command_repository_spec.rb  #
-  書き込み系リポジトリのテスト
-  │   │    └── queries/
-  │   │         └── active_record_user_query_repository_spec.rb 　#
-  読み取り系リポジトリのテスト
-  │   │
-  │   ├── services/  # アプリケーションサービス層 (汎用的な処理) ※
-  03_servicesに置くか、ここに置くかで迷ってる
-  │   │   ├── wapi/
-  │   │   │    ├── email_service.rb       # （Web用）メール送信サービスのテスト
-  │   │   │    └── ....
-  │   │   ├── admin/
-  │   │   │    ├── email_service.rb         #
-  （管理者が使用するための）メール送信サービスのテスト
-  │   │   │    └── ....
-  │   │   └── common
-  │   │       　├── email_service.rb         # メール送信サービスのテスト
-  │   │       　└── notification_service.rb  # 通知サービスのテスト
-  │   │
-  │   └── external_apis/           # 外部APIとの連携のテスト
+  ├── 04_infrastructure/
+  │   ├── sales/                              # ★インフラも文脈ごと（repo実装）
+  │   │   └── repositories/ { commands/active_record_order_command_repository_spec.rb,
+  │   │                       queries/active_record_order_query_repository_spec.rb }
+  │   ├── identity/
+  │   │   └── repositories/ { commands/active_record_user_command_repository_spec.rb,
+  │   │                       queries/active_record_user_query_repository_spec.rb }
+  │   └── external_apis/                      # ← 横断（そのまま）
   │       └── payment_gateway_api_spec.rb
   │
-  └── 05_interfaces/                 # インターフェースアダプタ層
-      ├── requests/                  # コントローラのテスト
-      │     ├── api/
-      │     │    └── v1/
-      │     │        └── users_controller_request_spec.rb
-      │     ├── wapi/
-      │     │    └── v1/
-      │     │        └── users_controller_request_spec.rb
-      │     └── admin/
-      │          └── users_controller_request_spec.rb
-      │
-      ├── systems/
-      │    └── users/
-      │          └── index_spec.rb
-      ├── presenters/                  # プレゼンターのテスト
-      │    └── user_presenter_spec.rb       # ユーザー表示フォーマットのテスト
-      │
-      └── serializers/
+  └── 05_interfaces/                          # ← 横断（そのまま）
+      ├── requests/                           # APIテスト
+      │   ├── api/v1/   { users_controller_request_spec.rb }
+      │   ├── wapi/v1/  { users_controller_request_spec.rb }
+      │   └── admin/    { users_controller_request_spec.rb }
+      ├── system/                             # ブラウザテスト（systems → system）
+      │   └── users/    { index_spec.rb }
+      ├── presenters/   { user_presenter_spec.rb }
+      └── serializers/  { user_serializer_spec.rb }
 ```
-
 ### 問題：このツリーは“素のRails”では動かない
-`app/01_domain/...` は2つの理由でそのままだと破綻する：
-1. **`01_domain` は数字始まり** → Rubyのモジュール名にできない（`Domain` 名前空間が自動で生まれない）
-2. `aggregates` `value_objects` `entities` などの**構造フォルダまで名前空間に入ってしまう**
-   （設定なしだと `app/01_domain/aggregates/user/value_objects/user_email.rb` は
-   **`Aggregates::User::ValueObjects::UserEmail`** を要求される＝醜い）
+  `app/01_domain/...` は2つの理由でそのままだと破綻する：
+  1. **`01_domain` は数字始まり** → Rubyのモジュール名にできない（`Domain`
+  名前空間が自動で生まれない）
+  2. **構造フォルダ（aggregates / value_objects / entities / services / repositories /
+  commands / queries）まで名前空間に入ってしまう**
+     設定なしだと
+     `app/01_domain/identity/aggregates/user/value_objects/user_email.rb`
+     は **`Identity::Aggregates::User::ValueObjects::UserEmail`** を要求される（醜い）。
+     欲しいのは **`Domain::Identity::User::UserEmail`**
+     ＝「**層名(Domain)・文脈(Identity)・集約(User)**
 
 ### 解決：Zeitwerkに「名前空間」と「collapse」を教える
 ```ruby
-# config/initializers/zeitwerk.rb
-module Domain; end
-module UseCases; end
-module AppServices; end
-module Infrastructure; end
-module Interfaces; end
+  # config/initializers/zeitwerk.rb
+  module Domain; end
+  module UseCases; end
+  module AppServices; end
+  module Infrastructure; end
+  module Interfaces; end
 
-main = Rails.autoloaders.main
+  main = Rails.autoloaders.main
 
-# ① 数字始まりルート → 層の名前空間を割り当て
-main.push_dir(Rails.root.join("app/01_domain"),         namespace: Domain)
-main.push_dir(Rails.root.join("app/02_use_cases"),      namespace: UseCases)
-main.push_dir(Rails.root.join("app/03_services"),       namespace: AppServices)
-main.push_dir(Rails.root.join("app/04_infrastructure"), namespace: Infrastructure)
-main.push_dir(Rails.root.join("app/05_interfaces"),     namespace: Interfaces)
+  # ① 数字始まりルート → 層の名前空間
+  main.push_dir(Rails.root.join("app/01_domain"),         namespace: Domain)
+  main.push_dir(Rails.root.join("app/02_use_cases"),      namespace: UseCases)
+  main.push_dir(Rails.root.join("app/03_services"),       namespace: AppServices)
+  main.push_dir(Rails.root.join("app/04_infrastructure"), namespace: Infrastructure)
+  main.push_dir(Rails.root.join("app/05_interfaces"),     namespace: Interfaces)
 
-# ② 構造フォルダは名前空間にしない（collapse）
-main.collapse("app/01_domain/aggregates")
-main.collapse("app/01_domain/aggregates/*/value_objects")
-main.collapse("app/01_domain/aggregates/*/entities")
-main.collapse("app/01_domain/aggregates/*/services")
-main.collapse("app/01_domain/aggregates/*/repositories")
-main.collapse("app/01_domain/aggregates/*/repositories/commands")
-main.collapse("app/01_domain/aggregates/*/repositories/queries")
-main.collapse("app/01_domain/shared/value_objects")
-main.collapse("app/01_domain/shared/services")
-main.collapse("app/04_infrastructure/repositories")
-main.collapse("app/04_infrastructure/repositories/commands")
-main.collapse("app/04_infrastructure/repositories/queries")
+  # ② 構造フォルダ
+  # domain：  <context>/aggregates/<aggregate>/{構造}
+  main.collapse("app/01_domain/*/aggregates")
+  main.collapse("app/01_domain/*/aggregates/*/value_objects")
+  main.collapse("app/01_domain/*/aggregates/*/entities")
+  main.collapse("app/01_domain/*/aggregates/*/services")
+  main.collapse("app/01_domain/*/aggregates/*/repositories")
+  main.collapse("app/01_domain/*/aggregates/*/repositories/commands")
+  main.collapse("app/01_domain/*/aggregates/*/repositories/queries")
+  main.collapse("app/01_domain/shared/value_objects")
+  main.collapse("app/01_domain/shared/services")
+
+  # infrastructure： <context>/repositories/{commands,queries}
+  main.collapse("app/04_infrastructure/*/repositories")
+  main.collapse("app/04_infrastructure/*/repositories/commands")
+  main.collapse("app/04_infrastructure/*/repositories/queries")
 ```
 
-### ルール（覚えるのはこれだけ）
-> **名前空間に残るのは「層名・集約名・shared・models」だけ。**
+## ルール（覚えるのはこれだけ）
+
+> **名前空間に残るのは「層名・文脈名(sales/identity)・集約名・shared・models」だけ。**
 > **構造フォルダ（aggregates / value_objects / entities / services / repositories / commands / queries）は collapse して消す。**
 
-### 対応表（この設定での最終形）
+## 対応表（A適用・最終形）
+
 | ファイルパス | モジュール／クラス |
 |---|---|
-| `01_domain/aggregates/user/value_objects/user_email.rb` | `Domain::User::UserEmail` |
-| `01_domain/aggregates/shopping_cart/shopping_cart.rb` | `Domain::ShoppingCart::ShoppingCart` |
-| `01_domain/aggregates/order/entities/order_item.rb` | `Domain::Order::OrderItem` |
-| `01_domain/aggregates/user/repositories/commands/user_command_repository.rb` | `Domain::User::UserCommandRepository` |
+| `01_domain/identity/aggregates/user/value_objects/user_email.rb` | `Domain::Identity::User::UserEmail` |
+| `01_domain/sales/aggregates/shopping_cart/shopping_cart.rb` | `Domain::Sales::ShoppingCart::ShoppingCart` |
+| `01_domain/sales/aggregates/order/entities/order_item.rb` | `Domain::Sales::Order::OrderItem` |
+| `01_domain/identity/aggregates/user/repositories/commands/user_command_repository.rb` | `Domain::Identity::User::UserCommandRepository` |
 | `01_domain/shared/value_objects/address.rb` | `Domain::Shared::Address` |
-| `04_infrastructure/repositories/commands/active_record_user_command_repository.rb` | `Infrastructure::ActiveRecordUserCommandRepository` |
-| `04_infrastructure/models/user.rb` | `Infrastructure::Models::User` |
-| `02_use_cases/web/register_user_web.rb` | `UseCases::Web::RegisterUserWeb` |
+| `04_infrastructure/identity/repositories/commands/active_record_user_command_repository.rb` | `Infrastructure::Identity::ActiveRecordUserCommandRepository` |
+| `04_infrastructure/identity/models/user.rb` | `Infrastructure::Identity::Models::User` |
+| `04_infrastructure/external_apis/payment_gateway_api.rb` | `Infrastructure::ExternalApis::PaymentGatewayApi` |
+| `02_use_cases/identity/web/register_user.rb` | `UseCases::Identity::Web::RegisterUser` |
 
 > 🪙 **トレードオフ（正直に）**：この設定は重い。嫌なら**フォルダに数字を付けない／構造を浅くする**手もある。
 > 「番号付き・深いネスト」は人間には読みやすいが、**Zeitwerk設定とのセット**で初めて成立する、と覚えておく。
 > 以降の全ファイルのモジュール名は、**この設定が入っている前提**で書く。
 
 ---
-
-### Railsプロジェクトのフォルダも加えるとこんな感じに
-```
-app/
-├── 01_domain/               # ドメイン層
-│   ├── aggregates/
-│   ├── entities/
-│   ├── services/
-│   └── value_objects/
-│
-├── 02_use_cases/            # アプリケーション層(複数エンティティにまたがる処理)
-│   └── ...
-│
-├── 03_services/             # アプリケーションサービス層（汎用サービス）
-│   ├── api/
-│   ├── wapi/
-│   ├── admin/
-│   └── common/
-│
-├── 04_infrastructure/       # インフラストラクチャ層
-│   ├── repositories/
-│   ├── mailers/
-│   ├── models/
-│   ├── jobs/
-│   └── external_apis/
-│
-├── 05_interfaces/           # インターフェース層
-│   ├── controllers/
-│   ├── views/
-│   ├── presenters/
-│   ├── javascripts/
-│   └── serializers/
-│
-├── bin/                     # Rails実行ファイル
-│   ├── rails
-│   └── rake
-│
-├── config/                  # Rails設定ファイル
-│   ├── application.rb
-│   ├── database.yml
-│   ├── environment.rb
-│   └── routes.rb
-│
-├── db/                      # データベース関連
-│   ├── migrate/
-│   ├── schema.rb
-│   └── seeds.rb
-│
-├── node_modules/
-│
-├── lib/                     # ライブラリ（カスタムコードを配置する場所）
-│   └── tasks/
-│
-├── log/                     # ログファイル
-│
-├── public/                  # 静的ファイル（HTML、CSSなど）
-│
-├── storage/                 # ActiveStorage用
-│
-├── spec/                    # テストコード
-│
-├── tmp/                     # 一時ファイル
-│
-├── vendor/                  # サードパーティコード
-│
-├── Gemfile                  # Gemの管理
-├── Gemfile.lock             # Gemのバージョン固定
-├── Rakefile                 # Rakeタスク管理
-└── README.md                # プロジェクト説明、環境構築などの手順を書く
-```
-
-
-
 
 Djangoだとこんな感じだろうか
 ```
