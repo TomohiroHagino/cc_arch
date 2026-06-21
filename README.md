@@ -302,7 +302,7 @@ spec/
 > **名前空間に残るのは「層名・文脈名(sales/identity)・集約名・shared・models」だけ。**
 > **構造フォルダ（aggregates / value_objects / entities / services / repositories / commands / queries）は collapse して消す。**
 
-## 対応表（A適用・最終形）
+## 対応表
 
 | ファイルパス | モジュール／クラス |
 |---|---|
