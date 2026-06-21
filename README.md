@@ -12,124 +12,242 @@ https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
 # Ruby on Rails
 
 ```
-  app/
-  ├── 01_domain/
-  │   ├── sales/                              # ★文脈の棚（層は増えない・ただの仕切り）
-  │   │   └── aggregates/
-  │   │       ├── shopping_cart/ { shopping_cart.rb, entities/, value_objects/, services/,
-  repositories/{commands,queries} }
-  │   │       └── order/         { order.rb, entities/, value_objects/, services/,
-  repositories/{commands,queries} }
-  │   ├── identity/                           # ★文脈の棚
-  │   │   └── aggregates/
-  │   │       └── user/          { user.rb, entities/, value_objects/, services/,
-  repositories/{commands,queries} }
-  │   └── shared/                             # 文脈をまたぐ共有（そのまま・動かさない）
-  │       ├── value_objects/ { address.rb }
-  │       └── services/      { tax_calculator_service.rb, shipping_cost_service.rb }
-  │
-  ├── 02_use_cases/
-  │   ├── sales/                              # 販売の業務フロー（例：place_order）
-  │   │   └── { place_order.rb, confirm_order.rb }
-  │   └── identity/                           # ユーザー関連は全部ここ（今の
-  register/ban/withdraw）
-  │       ├── web/    { register_user.rb, ban_user.rb, withdraw_user.rb }
-  │       └── mobile/ { register_user.rb, ban_user.rb, withdraw_user.rb }
-  │
-  ├── 03_services/                            # ← 横断。文脈で分けない（そのまま！）
-  │   ├── api/  wapi/  admin/  common/  { email_service.rb, notification_service.rb }
-  │
-  ├── 04_infrastructure/
-  │   ├── sales/                              # ★インフラも文脈ごと（repo実装＋ARモデル）
-  │   │   ├── repositories/ { commands/active_record_order_command_repository.rb,
-  queries/... }
-  │   │   └── models/        { order.rb, order_item.rb, cart.rb }   # アソシエーションだけ
-  │   ├── identity/
-  │   │   ├── repositories/ { commands/active_record_user_command_repository.rb, queries/...
-  }
-  │   │   └── models/        { user.rb }
-  │   └── external_apis/                      # ← 横断。文脈で分けない（そのまま！）
-  │       └── payment_gateway_api.rb
-  │
-  └── 05_interfaces/                          # ← Web/APIの出入口。横断（そのまま！）
-      ├── controllers/
-      │   ├── api/v1/
-      │   │   └── users_controller.rb
-      │   ├── wapi/v1/
-      │   │   └── users_controller.rb
-      │   └── admin/
-      │       └── users_controller.rb
-      ├── views/
-      │   └── users/
-      │       └── index.html.erb
-      ├── presenters/
-      │   └── user_presenter.rb
-      ├── serializers/
-      │   └── user_serializer.rb
-      ├── assets/
-      └── javascripts/
+app/
+├── 01_domain/
+│   ├── sales/                              # 文脈の棚（層は増えない）
+│   │   └── aggregates/
+│   │       ├── shopping_cart/
+│   │       │   ├── shopping_cart.rb        # アグリゲートルート
+│   │       │   ├── entities/
+│   │       │   │   ├── item.rb
+│   │       │   │   └── discount.rb
+│   │       │   ├── value_objects/
+│   │       │   │   ├── product_id.rb
+│   │       │   │   └── shopping_cart_money.rb
+│   │       │   ├── services/
+│   │       │   │   └── calculate_cart_total_service.rb
+│   │       │   └── repositories/
+│   │       │       ├── commands/
+│   │       │       │   └── shopping_cart_command_repository.rb
+│   │       │       └── queries/
+│   │       │           └── shopping_cart_query_repository.rb
+│   │       └── order/
+│   │           ├── order.rb
+│   │           ├── entities/
+│   │           │   ├── order_item.rb
+│   │           │   ├── shipping_detail.rb
+│   │           │   └── payment_detail.rb
+│   │           ├── value_objects/
+│   │           │   ├── order_address.rb
+│   │           │   └── tax_rate.rb
+│   │           ├── services/
+│   │           │   └── calculate_order_total_service.rb
+│   │           └── repositories/
+│   │               ├── commands/
+│   │               │   └── order_command_repository.rb
+│   │               └── queries/
+│   │                   └── order_query_repository.rb
+│   ├── identity/                           # 文脈の棚
+│   │   └── aggregates/
+│   │       └── user/
+│   │           ├── user.rb
+│   │           ├── entities/
+│   │           │   ├── user_profile.rb
+│   │           │   └── user_preferences.rb
+│   │           ├── value_objects/
+│   │           │   ├── user_email.rb
+│   │           │   ├── password.rb
+│   │           │   └── user_address.rb
+│   │           ├── services/
+│   │           │   └── password_encryption_service.rb
+│   │           └── repositories/
+│   │               ├── commands/
+│   │               │   └── user_command_repository.rb
+│   │               └── queries/
+│   │                   └── user_query_repository.rb
+│   └── shared/                             # 文脈をまたぐ共有（分けない）
+│       ├── value_objects/
+│       │   └── address.rb
+│       └── services/
+│           ├── tax_calculator_service.rb
+│           └── shipping_cost_service.rb
+│
+├── 02_use_cases/
+│   ├── sales/
+│   │   ├── place_order.rb
+│   │   └── confirm_order.rb
+│   └── identity/
+│       ├── web/
+│       │   ├── register_user.rb
+│       │   ├── ban_user.rb
+│       │   └── withdraw_user.rb
+│       └── mobile/
+│           ├── register_user.rb
+│           ├── ban_user.rb
+│           └── withdraw_user.rb
+│
+├── 03_services/                            # 横断（文脈で分けない）
+│   ├── api/
+│   │   └── email_service.rb
+│   ├── wapi/
+│   │   └── email_service.rb
+│   ├── admin/
+│   │   └── email_service.rb
+│   └── common/
+│       ├── email_service.rb
+│       └── notification_service.rb
+│
+├── 04_infrastructure/
+│   ├── sales/                              # インフラも文脈ごと
+│   │   ├── repositories/
+│   │   │   ├── commands/
+│   │   │   │   └── active_record_order_command_repository.rb
+│   │   │   └── queries/
+│   │   │       └── active_record_order_query_repository.rb
+│   │   └── models/
+│   │       ├── order.rb
+│   │       ├── order_item.rb
+│   │       └── cart.rb
+│   ├── identity/
+│   │   ├── repositories/
+│   │   │   ├── commands/
+│   │   │   │   └── active_record_user_command_repository.rb
+│   │   │   └── queries/
+│   │   │       └── active_record_user_query_repository.rb
+│   │   └── models/
+│   │       └── user.rb
+│   └── external_apis/                      # 横断
+│       └── payment_gateway_api.rb
+│
+└── 05_interfaces/                          # 横断（HTTPの出入口は1つ）
+    ├── controllers/
+    │   ├── api/
+    │   │   └── v1/
+    │   │       └── users_controller.rb
+    │   ├── wapi/
+    │   │   └── v1/
+    │   │       └── users_controller.rb
+    │   └── admin/
+    │       └── users_controller.rb
+    ├── views/
+    │   └── users/
+    │       └── index.html.erb
+    ├── presenters/
+    │   └── user_presenter.rb
+    ├── serializers/
+    │   └── user_serializer.rb
+    ├── assets/
+    └── javascripts/
 ```
 
+---
+
+## spec/ ツリー（A適用・app の完全な鏡）
+
 ```
-  spec/
-  ├── 01_domain/
-  │   ├── sales/                              # ★文脈の棚（app と同じ）
-  │   │   └── aggregates/
-  │   │       ├── shopping_cart/
-  │   │       │   ├── shopping_cart_spec.rb            # 純粋unit・DBなし
-  │   │       │   ├── entities/        { item_spec.rb, discount_spec.rb }
-  │   │       │   ├── value_objects/   { product_id_spec.rb, shopping_cart_money_spec.rb }
-  │   │       │   └── services/        { calculate_cart_total_service_spec.rb }
-  │   │       │       # ← repositories/ の spec は基本ナシ（理由は下）
-  │   │       └── order/
-  │   │           ├── order_spec.rb
-  │   │           ├── entities/        { order_item_spec.rb, shipping_detail_spec.rb,
-  payment_detail_spec.rb }
-  │   │           ├── value_objects/   { order_address_spec.rb, tax_rate_spec.rb }
-  │   │           └── services/        { calculate_order_total_service_spec.rb }
-  │   ├── identity/                           # ★文脈の棚
-  │   │   └── aggregates/
-  │   │       └── user/
-  │   │           ├── user_spec.rb
-  │   │           ├── entities/        { user_profile_spec.rb, user_preferences_spec.rb }
-  │   │           ├── value_objects/   { user_email_spec.rb, password_spec.rb,
-  user_address_spec.rb }
-  │   │           └── services/        { password_encryption_service_spec.rb }
-  │   └── shared/                             # 横断共有（文脈で分けない・そのまま）
-  │       ├── value_objects/  { money_spec.rb, address_spec.rb }
-  │       └── services/       { tax_calculator_service_spec.rb,
-  shipping_cost_service_spec.rb }
-  │
-  ├── 02_use_cases/
-  │   ├── sales/                              # 販売の業務フロー
-  │   │   └── { place_order_spec.rb }
-  │   └── identity/                           # 今の register/ban/withdraw はここ
-  │       ├── web/    { register_user_spec.rb, ban_user_spec.rb, withdraw_user_spec.rb }
-  │       └── mobile/ { register_user_spec.rb, ban_user_spec.rb, withdraw_user_spec.rb }
-  │
-  ├── 03_services/                            # ← 横断。文脈で分けない（そのまま）
-  │   └── { api/, wapi/, admin/, common/ } 各 { email_service_spec.rb,
-  notification_service_spec.rb }
-  │
-  ├── 04_infrastructure/
-  │   ├── sales/                              # ★インフラも文脈ごと（repo実装）
-  │   │   └── repositories/ { commands/active_record_order_command_repository_spec.rb,
-  │   │                       queries/active_record_order_query_repository_spec.rb }
-  │   ├── identity/
-  │   │   └── repositories/ { commands/active_record_user_command_repository_spec.rb,
-  │   │                       queries/active_record_user_query_repository_spec.rb }
-  │   └── external_apis/                      # ← 横断（そのまま）
-  │       └── payment_gateway_api_spec.rb
-  │
-  └── 05_interfaces/                          # ← 横断（そのまま）
-      ├── requests/                           # APIテスト
-      │   ├── api/v1/   { users_controller_request_spec.rb }
-      │   ├── wapi/v1/  { users_controller_request_spec.rb }
-      │   └── admin/    { users_controller_request_spec.rb }
-      ├── system/                             # ブラウザテスト（systems → system）
-      │   └── users/    { index_spec.rb }
-      ├── presenters/   { user_presenter_spec.rb }
-      └── serializers/  { user_serializer_spec.rb }
+spec/
+├── 01_domain/
+│   ├── sales/
+│   │   └── aggregates/
+│   │       ├── shopping_cart/
+│   │       │   ├── shopping_cart_spec.rb
+│   │       │   ├── entities/
+│   │       │   │   ├── item_spec.rb
+│   │       │   │   └── discount_spec.rb
+│   │       │   ├── value_objects/
+│   │       │   │   ├── product_id_spec.rb
+│   │       │   │   └── shopping_cart_money_spec.rb
+│   │       │   └── services/
+│   │       │       └── calculate_cart_total_service_spec.rb
+│   │       └── order/
+│   │           ├── order_spec.rb
+│   │           ├── entities/
+│   │           │   ├── order_item_spec.rb
+│   │           │   ├── shipping_detail_spec.rb
+│   │           │   └── payment_detail_spec.rb
+│   │           ├── value_objects/
+│   │           │   ├── order_address_spec.rb
+│   │           │   └── tax_rate_spec.rb
+│   │           └── services/
+│   │               └── calculate_order_total_service_spec.rb
+│   ├── identity/
+│   │   └── aggregates/
+│   │       └── user/
+│   │           ├── user_spec.rb
+│   │           ├── entities/
+│   │           │   ├── user_profile_spec.rb
+│   │           │   └── user_preferences_spec.rb
+│   │           ├── value_objects/
+│   │           │   ├── user_email_spec.rb
+│   │           │   ├── password_spec.rb
+│   │           │   └── user_address_spec.rb
+│   │           └── services/
+│   │               └── password_encryption_service_spec.rb
+│   └── shared/
+│       ├── value_objects/
+│       │   ├── money_spec.rb
+│       │   └── address_spec.rb
+│       └── services/
+│           ├── tax_calculator_service_spec.rb
+│           └── shipping_cost_service_spec.rb
+│
+├── 02_use_cases/
+│   ├── sales/
+│   │   └── place_order_spec.rb
+│   └── identity/
+│       ├── web/
+│       │   ├── register_user_spec.rb
+│       │   ├── ban_user_spec.rb
+│       │   └── withdraw_user_spec.rb
+│       └── mobile/
+│           ├── register_user_spec.rb
+│           ├── ban_user_spec.rb
+│           └── withdraw_user_spec.rb
+│
+├── 03_services/
+│   ├── api/
+│   │   └── email_service_spec.rb
+│   ├── wapi/
+│   │   └── email_service_spec.rb
+│   ├── admin/
+│   │   └── email_service_spec.rb
+│   └── common/
+│       ├── email_service_spec.rb
+│       └── notification_service_spec.rb
+│
+├── 04_infrastructure/
+│   ├── sales/
+│   │   └── repositories/
+│   │       ├── commands/
+│   │       │   └── active_record_order_command_repository_spec.rb
+│   │       └── queries/
+│   │           └── active_record_order_query_repository_spec.rb
+│   ├── identity/
+│   │   └── repositories/
+│   │       ├── commands/
+│   │       │   └── active_record_user_command_repository_spec.rb
+│   │       └── queries/
+│   │           └── active_record_user_query_repository_spec.rb
+│   └── external_apis/
+│       └── payment_gateway_api_spec.rb
+│
+└── 05_interfaces/
+    ├── requests/
+    │   ├── api/
+    │   │   └── v1/
+    │   │       └── users_controller_request_spec.rb
+    │   ├── wapi/
+    │   │   └── v1/
+    │   │       └── users_controller_request_spec.rb
+    │   └── admin/
+    │       └── users_controller_request_spec.rb
+    ├── system/
+    │   └── users/
+    │       └── index_spec.rb
+    ├── presenters/
+    │   └── user_presenter_spec.rb
+    └── serializers/
+        └── user_serializer_spec.rb
 ```
 ### 問題：このツリーは“素のRails”では動かない
   `app/01_domain/...` は2つの理由でそのままだと破綻する：
