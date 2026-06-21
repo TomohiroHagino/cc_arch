@@ -65,7 +65,7 @@ app/
 │   │               │   └── user_command_repository.rb
 │   │               └── queries/
 │   │                   └── user_query_repository.rb
-│   └── shared/                             # コンテキストをまたぐ共有（分けない）
+│   └── shared/            # コンテキストをまたぐ共有（分けない）
 │       ├── value_objects/
 │       │   └── address.rb
 │       └── services/
