@@ -261,6 +261,68 @@ spec/
 
 ```
 
+### 問題：このツリーは“素のRails”では動かない
+`app/01_domain/...` は2つの理由でそのままだと破綻する：
+1. **`01_domain` は数字始まり** → Rubyのモジュール名にできない（`Domain` 名前空間が自動で生まれない）
+2. `aggregates` `value_objects` `entities` などの**構造フォルダまで名前空間に入ってしまう**
+   （設定なしだと `app/01_domain/aggregates/user/value_objects/user_email.rb` は
+   **`Aggregates::User::ValueObjects::UserEmail`** を要求される＝醜い）
+
+### 解決：Zeitwerkに「名前空間」と「collapse」を教える
+```ruby
+# config/initializers/zeitwerk.rb
+module Domain; end
+module UseCases; end
+module AppServices; end
+module Infrastructure; end
+module Interfaces; end
+
+main = Rails.autoloaders.main
+
+# ① 数字始まりルート → 層の名前空間を割り当て
+main.push_dir(Rails.root.join("app/01_domain"),         namespace: Domain)
+main.push_dir(Rails.root.join("app/02_use_cases"),      namespace: UseCases)
+main.push_dir(Rails.root.join("app/03_services"),       namespace: AppServices)
+main.push_dir(Rails.root.join("app/04_infrastructure"), namespace: Infrastructure)
+main.push_dir(Rails.root.join("app/05_interfaces"),     namespace: Interfaces)
+
+# ② 構造フォルダは名前空間にしない（collapse）
+main.collapse("app/01_domain/aggregates")
+main.collapse("app/01_domain/aggregates/*/value_objects")
+main.collapse("app/01_domain/aggregates/*/entities")
+main.collapse("app/01_domain/aggregates/*/services")
+main.collapse("app/01_domain/aggregates/*/repositories")
+main.collapse("app/01_domain/aggregates/*/repositories/commands")
+main.collapse("app/01_domain/aggregates/*/repositories/queries")
+main.collapse("app/01_domain/shared/value_objects")
+main.collapse("app/01_domain/shared/services")
+main.collapse("app/04_infrastructure/repositories")
+main.collapse("app/04_infrastructure/repositories/commands")
+main.collapse("app/04_infrastructure/repositories/queries")
+```
+
+### ルール（覚えるのはこれだけ）
+> **名前空間に残るのは「層名・集約名・shared・models」だけ。**
+> **構造フォルダ（aggregates / value_objects / entities / services / repositories / commands / queries）は collapse して消す。**
+
+### 対応表（この設定での最終形）
+| ファイルパス | モジュール／クラス |
+|---|---|
+| `01_domain/aggregates/user/value_objects/user_email.rb` | `Domain::User::UserEmail` |
+| `01_domain/aggregates/shopping_cart/shopping_cart.rb` | `Domain::ShoppingCart::ShoppingCart` |
+| `01_domain/aggregates/order/entities/order_item.rb` | `Domain::Order::OrderItem` |
+| `01_domain/aggregates/user/repositories/commands/user_command_repository.rb` | `Domain::User::UserCommandRepository` |
+| `01_domain/shared/value_objects/address.rb` | `Domain::Shared::Address` |
+| `04_infrastructure/repositories/commands/active_record_user_command_repository.rb` | `Infrastructure::ActiveRecordUserCommandRepository` |
+| `04_infrastructure/models/user.rb` | `Infrastructure::Models::User` |
+| `02_use_cases/web/register_user_web.rb` | `UseCases::Web::RegisterUserWeb` |
+
+> 🪙 **トレードオフ（正直に）**：この設定は重い。嫌なら**フォルダに数字を付けない／構造を浅くする**手もある。
+> 「番号付き・深いネスト」は人間には読みやすいが、**Zeitwerk設定とのセット**で初めて成立する、と覚えておく。
+> 以降の全ファイルのモジュール名は、**この設定が入っている前提**で書く。
+
+---
+
 ### Railsプロジェクトのフォルダも加えるとこんな感じに
 ```
 app/
