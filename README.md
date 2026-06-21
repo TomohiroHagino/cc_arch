@@ -14,7 +14,7 @@ https://qiita.com/MinoDriven/items/3c7db287e2c66f36589a
 ```
 app/
 ├── 01_domain/
-│   ├── sales/                              # 文脈の棚（層は増えない）
+│   ├── sales/                              # コンテキストをこんな感じで分けていく
 │   │   └── aggregates/
 │   │       ├── shopping_cart/
 │   │       │   ├── shopping_cart.rb        # アグリゲートルート
@@ -47,7 +47,7 @@ app/
 │   │               │   └── order_command_repository.rb
 │   │               └── queries/
 │   │                   └── order_query_repository.rb
-│   ├── identity/                           # 文脈の棚
+│   ├── identity/                           # コンテキスト
 │   │   └── aggregates/
 │   │       └── user/
 │   │           ├── user.rb
@@ -65,7 +65,7 @@ app/
 │   │               │   └── user_command_repository.rb
 │   │               └── queries/
 │   │                   └── user_query_repository.rb
-│   └── shared/                             # 文脈をまたぐ共有（分けない）
+│   └── shared/                             # コンテキストをまたぐ共有（分けない）
 │       ├── value_objects/
 │       │   └── address.rb
 │       └── services/
